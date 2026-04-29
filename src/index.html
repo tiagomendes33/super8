@@ -1,0 +1,2751 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>SUPER 8 - Beach Tennis - 02/05</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   SUPER 8 — Mobile-First Beach Tennis
+   Refs: TF Sports + Heroes Brand Sport
+   ═══════════════════════════════════════════ */
+
+:root {
+  --bg: #0A0A0A;
+  --surface: #141414;
+  --surface2: #1A1A1A;
+  --surface3: #222222;
+  --border: rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.12);
+
+  /* Brand — Neon Lime (TF Sports ref) + Red Fierce (Heroes ref) */
+  --lime: #C9FF37;
+  --lime-dim: #A8D42E;
+  --lime-glow: rgba(201,255,55,0.12);
+  --lime-glow2: rgba(201,255,55,0.06);
+  --red: #E30613;
+  --red-glow: rgba(227,6,19,0.15);
+
+  --white: #F5F5F5;
+  --gray100: #E0E0E0;
+  --gray300: #999999;
+  --gray500: #666666;
+  --gray700: #333333;
+  --green: #00E676;
+  --cyan: #00D4FF;
+
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  --nav-h: 56px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: contain;
+}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* ════════════════════════
+   HERO
+   ════════════════════════ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 60px 20px 40px;
+  text-align: center;
+  background: var(--bg);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(201,255,55,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,255,55,0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+}
+
+.hero-glow {
+  position: absolute;
+  top: -60px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 260px;
+  background: radial-gradient(ellipse, rgba(201,255,55,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(201,255,55,0.08);
+  border: 1px solid rgba(201,255,55,0.20);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  color: var(--lime);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero-badge .dot {
+  width: 6px; height: 6px;
+  background: var(--lime);
+  border-radius: 50%;
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity:1; } 50% { opacity:.25; }
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: .82;
+  letter-spacing: -1px;
+  position: relative;
+}
+
+.hero-title .t-outline {
+  display: block;
+  font-size: clamp(72px, 18vw, 160px);
+  -webkit-text-stroke: 2px var(--lime);
+  color: transparent;
+  position: relative;
+  animation: smokeText 4s ease-in-out infinite;
+}
+
+/* Smoke wrapper */
+.t-smoke-wrap {
+  position: relative;
+  display: block;
+}
+
+/* Smoke particles */
+.smoke {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,255,55,0.12) 0%, rgba(201,255,55,0.03) 40%, transparent 70%);
+  pointer-events: none;
+  filter: blur(16px);
+  mix-blend-mode: screen;
+}
+
+.smoke.s1 {
+  width: 120px; height: 60px;
+  left: 10%; bottom: 20%;
+  animation: smokeRise1 5s ease-in-out infinite;
+}
+
+.smoke.s2 {
+  width: 80px; height: 50px;
+  left: 50%; bottom: 10%;
+  animation: smokeRise2 7s ease-in-out infinite 1s;
+}
+
+.smoke.s3 {
+  width: 100px; height: 45px;
+  right: 15%; bottom: 25%;
+  animation: smokeRise3 6s ease-in-out infinite 2.5s;
+}
+
+@keyframes smokeRise1 {
+  0%   { transform: translateY(0) scaleX(1); opacity: 0; }
+  15%  { opacity: 0.5; }
+  50%  { transform: translateY(-30px) scaleX(1.3); opacity: 0.3; }
+  85%  { opacity: 0.1; }
+  100% { transform: translateY(-50px) scaleX(1.6); opacity: 0; }
+}
+
+@keyframes smokeRise2 {
+  0%   { transform: translateY(0) translateX(0) scaleX(1); opacity: 0; }
+  20%  { opacity: 0.4; }
+  55%  { transform: translateY(-25px) translateX(10px) scaleX(1.4); opacity: 0.25; }
+  100% { transform: translateY(-45px) translateX(15px) scaleX(1.7); opacity: 0; }
+}
+
+@keyframes smokeRise3 {
+  0%   { transform: translateY(0) translateX(0) scaleX(1); opacity: 0; }
+  25%  { opacity: 0.35; }
+  60%  { transform: translateY(-20px) translateX(-8px) scaleX(1.2); opacity: 0.2; }
+  100% { transform: translateY(-40px) translateX(-12px) scaleX(1.5); opacity: 0; }
+}
+
+/* Smoke / haze effect on SUPER text */
+@keyframes smokeText {
+  0%,100% {
+    text-shadow:
+      0 0 20px rgba(201,255,55,0.08),
+      0 0 40px rgba(201,255,55,0.04);
+    filter: blur(0px);
+    opacity: 1;
+  }
+  30% {
+    text-shadow:
+      0 0 30px rgba(201,255,55,0.15),
+      0 0 60px rgba(201,255,55,0.08),
+      4px -2px 40px rgba(201,255,55,0.06);
+    filter: blur(0.4px);
+    opacity: 0.92;
+  }
+  60% {
+    text-shadow:
+      0 0 25px rgba(201,255,55,0.12),
+      -3px 2px 50px rgba(201,255,55,0.07),
+      0 0 80px rgba(201,255,55,0.04);
+    filter: blur(0.2px);
+    opacity: 0.96;
+  }
+}
+
+.hero-title .t-fill {
+  display: block;
+  font-size: clamp(100px, 26vw, 220px);
+  color: var(--lime);
+  text-shadow: 0 0 60px rgba(201,255,55,0.3);
+  animation: eightPulse 3s ease-in-out infinite;
+}
+
+/* Subtle glow pulse on 8 */
+@keyframes eightPulse {
+  0%,100% {
+    text-shadow:
+      0 0 40px rgba(201,255,55,0.25),
+      0 0 80px rgba(201,255,55,0.10);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow:
+      0 0 60px rgba(201,255,55,0.45),
+      0 0 120px rgba(201,255,55,0.20),
+      0 0 180px rgba(201,255,55,0.08);
+    transform: scale(1.03);
+  }
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 28px;
+}
+
+.hstat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  min-width: 80px;
+  transition: border-color .2s;
+}
+
+.hstat:active { border-color: rgba(201,255,55,0.2); }
+
+.hstat-val {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--lime);
+  line-height: 1.1;
+}
+
+.hstat-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gray500);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.hero-line {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lime), transparent);
+  margin-top: 32px;
+  opacity: .3;
+}
+
+/* ════════════════════════
+   BOTTOM NAV (Mobile-first)
+   ════════════════════════ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding-bottom: var(--safe-bottom);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.bottom-nav::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  flex: 1;
+  min-width: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px 10px;
+  border: none;
+  background: none;
+  color: var(--gray500);
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .2s;
+  white-space: nowrap;
+  position: relative;
+}
+
+.nav-btn svg {
+  width: 22px; height: 22px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  fill: none;
+  transition: all .2s;
+}
+
+.nav-btn.on {
+  color: var(--lime);
+}
+
+.nav-btn.on::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 24px; height: 2px;
+  background: var(--lime);
+  border-radius: 0 0 2px 2px;
+}
+
+/* ════════════════════════
+   PAGE LAYOUT
+   ════════════════════════ */
+.page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 16px 100px;
+}
+
+.panel { display: none; }
+.panel.on { display: block; }
+
+/* ════════════════════════
+   SECTION HEADERS
+   ════════════════════════ */
+.sh {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 32px 0 16px;
+}
+
+.sh:first-child { margin-top: 20px; }
+
+.sh-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--lime);
+  background: rgba(201,255,55,0.10);
+  border: 1px solid rgba(201,255,55,0.25);
+  border-radius: 4px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+
+.sh h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+.sh-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201,255,55,0.25), transparent);
+}
+
+/* ════════════════════════
+   CARDS & COMPONENTS
+   ════════════════════════ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.card + .card { margin-top: 8px; }
+
+.info-box {
+  background: linear-gradient(135deg, rgba(201,255,55,0.06), rgba(201,255,55,0.02));
+  border: 1px solid rgba(201,255,55,0.15);
+  border-left: 3px solid var(--lime);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--gray100);
+  line-height: 1.6;
+}
+
+.info-box strong { color: var(--white); }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .5px;
+}
+
+.chip.lime { background: rgba(201,255,55,0.10); border: 1px solid rgba(201,255,55,0.25); color: var(--lime); }
+.chip.cyan { background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.20); color: var(--cyan); }
+.chip.green { background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.20); color: var(--green); }
+.chip.red { background: rgba(227,6,19,0.08); border: 1px solid rgba(227,6,19,0.20); color: var(--red); }
+
+/* ════════════════════════
+   ATHLETE CARDS
+   ════════════════════════ */
+.athletes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.athlete-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .25s, transform .2s, box-shadow .25s;
+  position: relative;
+}
+
+.athlete-card:active {
+  transform: scale(0.97);
+}
+
+.athlete-card:hover {
+  border-color: rgba(201,255,55,0.20);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.athlete-card-img {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  position: relative;
+  background: var(--surface2);
+}
+
+.athlete-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transition: transform .4s ease;
+}
+
+.athlete-card:hover .athlete-card-img img {
+  transform: scale(1.05);
+}
+
+.athlete-card-img::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60%;
+  background: linear-gradient(to top, var(--surface) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.athlete-card-letter {
+  position: absolute;
+  top: 8px; left: 10px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--lime);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+  z-index: 2;
+  line-height: 1;
+  opacity: .7;
+}
+
+.athlete-card-body {
+  padding: 12px 12px 14px;
+  position: relative;
+  margin-top: -20px;
+  z-index: 2;
+}
+
+.athlete-card-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 1px;
+  color: var(--white);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.athlete-card-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--gray500);
+  margin-top: 2px;
+  letter-spacing: .5px;
+}
+
+.athlete-card-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.athlete-card-stat {
+  background: var(--surface2);
+  border-radius: 6px;
+  padding: 6px 8px;
+  text-align: center;
+}
+
+.athlete-card-stat-val {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--lime);
+  line-height: 1.1;
+}
+
+.athlete-card-stat-label {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--gray500);
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+.athlete-card-winrate {
+  margin-top: 8px;
+  background: var(--surface2);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.athlete-card-winrate-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--gray700);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.athlete-card-winrate-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--lime), var(--lime-dim));
+  transition: width .6s ease;
+}
+
+.athlete-card-winrate-val {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--lime);
+  min-width: 48px;
+  text-align: right;
+}
+
+.athlete-card-winrate-label {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--gray500);
+  text-transform: uppercase;
+}
+
+/* ═══ ATHLETE DETAIL MODAL ═══ */
+.athlete-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+
+.athlete-modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.athlete-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform .35s cubic-bezier(.22,1,.36,1);
+}
+
+.athlete-modal-overlay.show .athlete-modal {
+  transform: translateY(0);
+}
+
+.athlete-modal-header {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.athlete-modal-header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.athlete-modal-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 70%;
+  background: linear-gradient(to top, var(--surface) 0%, transparent 100%);
+}
+
+.athlete-modal-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 36px; height: 36px;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.athlete-modal-close svg {
+  width: 18px; height: 18px;
+  stroke: var(--white);
+  fill: none;
+  stroke-width: 2;
+}
+
+.athlete-modal-info {
+  padding: 0 20px 8px;
+  margin-top: -36px;
+  position: relative;
+  z-index: 2;
+}
+
+.athlete-modal-letter {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 40px;
+  color: var(--lime);
+  text-shadow: 0 0 24px rgba(201,255,55,0.3);
+  line-height: 1;
+  opacity: .6;
+}
+
+.athlete-modal-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: var(--white);
+  text-transform: uppercase;
+  margin-top: -4px;
+}
+
+.athlete-modal-subtitle {
+  font-size: 12px;
+  color: var(--gray500);
+  margin-top: 2px;
+}
+
+.athlete-modal-body {
+  padding: 16px 20px 32px;
+}
+
+.am-section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--gray500);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.am-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.am-stat {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.am-stat-val {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.am-stat-val.positive { color: var(--green); }
+.am-stat-val.negative { color: var(--red); }
+.am-stat-val.neutral { color: var(--lime); }
+
+.am-stat-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--gray500);
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.am-winrate-block {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.am-winrate-circle {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--lime);
+  position: relative;
+}
+
+.am-winrate-circle svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.am-winrate-circle circle {
+  fill: none;
+  stroke-width: 3;
+}
+
+.am-winrate-circle .bg { stroke: var(--gray700); }
+.am-winrate-circle .fg { stroke: var(--lime); transition: stroke-dashoffset .8s ease; }
+
+.am-winrate-text {
+  flex: 1;
+}
+
+.am-winrate-text strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--white);
+  letter-spacing: 1px;
+}
+
+.am-winrate-text span {
+  font-size: 11px;
+  color: var(--gray500);
+}
+
+@media (min-width: 640px) {
+  .athletes-grid { grid-template-columns: repeat(4, 1fr); }
+  .athlete-modal {
+    border-radius: var(--radius-xl);
+    max-height: 85dvh;
+    margin-bottom: 20px;
+  }
+  .athlete-modal-overlay { align-items: center; }
+}
+
+/* ════════════════════════
+   FORMAT SECTION
+   ════════════════════════ */
+.format-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 380px) {
+  .format-grid { grid-template-columns: 1fr; }
+}
+
+.format-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.format-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gray500);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.format-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.format-body {
+  font-size: 13px;
+  color: var(--gray300);
+  line-height: 1.7;
+}
+
+.format-body strong { color: var(--white); }
+
+/* ════════════════════════
+   SCHEDULE
+   ════════════════════════ */
+.schedule-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.round-head {
+  background: linear-gradient(90deg, rgba(201,255,55,0.10), rgba(201,255,55,0.02));
+  border-bottom: 1px solid rgba(201,255,55,0.12);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.round-head .r-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--lime);
+  text-transform: uppercase;
+}
+
+.round-head .r-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gray500);
+}
+
+.match-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+  transition: background .15s;
+}
+
+.match-row:last-child { border-bottom: none; }
+.match-row:active { background: rgba(255,255,255,0.02); }
+
+.match-time {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lime);
+  min-width: 44px;
+  flex-shrink: 0;
+}
+
+.match-teams {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.m-team {
+  flex: 1;
+  min-width: 0;
+}
+
+.m-team.right { text-align: right; }
+
+.m-player {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-vs {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--gray700);
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.match-id {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--gray500);
+  letter-spacing: 1px;
+  min-width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.break-bar {
+  background: rgba(201,255,55,0.03);
+  border-top: 1px dashed rgba(201,255,55,0.10);
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gray500);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.break-bar svg {
+  width: 14px; height: 14px;
+  stroke: var(--gray500);
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.end-bar {
+  background: linear-gradient(90deg, rgba(0,230,118,0.08), rgba(0,230,118,0.02));
+  border-top: 1px solid rgba(0,230,118,0.15);
+  padding: 12px 16px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--green);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.end-bar svg {
+  width: 16px; height: 16px;
+  stroke: var(--green);
+  fill: none;
+  stroke-width: 2;
+}
+
+/* ════════════════════════
+   SCORE FORM
+   ════════════════════════ */
+.score-round-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--lime);
+  margin: 20px 0 8px;
+  padding-left: 12px;
+  border-left: 3px solid var(--lime);
+  text-transform: uppercase;
+}
+
+.score-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color .2s;
+}
+
+.score-team {
+  flex: 1;
+  min-width: 0;
+}
+
+.score-team.r { text-align: right; }
+
+.score-player {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.score-mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.score-jlabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--gray500);
+  letter-spacing: 1px;
+}
+
+.score-inputs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.s-in {
+  width: 44px; height: 44px;
+  background: var(--surface2);
+  border: 1px solid rgba(201,255,55,0.20);
+  border-radius: var(--radius-sm);
+  color: var(--lime);
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  transition: all .2s;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.s-in::-webkit-inner-spin-button,
+.s-in::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+.s-in:focus {
+  border-color: var(--lime);
+  background: rgba(201,255,55,0.06);
+  box-shadow: 0 0 0 3px rgba(201,255,55,0.08);
+}
+
+.s-sep {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--gray700);
+}
+
+.score-card.won-a { border-color: rgba(0,230,118,0.25); }
+.score-card.won-b { border-color: rgba(0,230,118,0.25); }
+
+/* ════════════════════════
+   RANKING TABLE
+   ════════════════════════ */
+.rank-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+.rank-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+  min-width: 480px;
+}
+
+.rank-table th {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gray500);
+  text-transform: uppercase;
+  padding: 8px 10px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+}
+
+.rank-table th:nth-child(2) { text-align: left; }
+
+.rank-row td {
+  padding: 12px 10px;
+  text-align: center;
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--white);
+  transition: background .2s;
+}
+
+.rank-row:first-child td { background: linear-gradient(90deg, rgba(201,255,55,0.10), var(--surface)); }
+.rank-row:nth-child(2) td { background: linear-gradient(90deg, rgba(255,255,255,0.04), var(--surface)); }
+.rank-row:nth-child(3) td { background: linear-gradient(90deg, rgba(205,127,50,0.06), var(--surface)); }
+
+.rank-row td:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+.rank-row td:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.rank-row td:nth-child(2) { text-align: left; font-weight: 600; }
+
+.pos-icon { font-size: 18px; }
+.saldo-p { color: var(--green); font-weight: 700; font-family: var(--font-mono); }
+.saldo-n { color: var(--red); font-weight: 700; font-family: var(--font-mono); }
+.saldo-z { color: var(--gray500); font-family: var(--font-mono); }
+.avg-val { font-family: var(--font-mono); color: var(--cyan); font-size: 12px; }
+
+/* ════════════════════════
+   TIEBREAK
+   ════════════════════════ */
+.tb-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tb-item:last-child { border-bottom: none; }
+
+.tb-n {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--lime);
+  line-height: 1;
+  min-width: 28px;
+  text-shadow: 0 0 16px rgba(201,255,55,0.2);
+}
+
+.tb-item p {
+  font-size: 13px;
+  color: var(--gray300);
+  line-height: 1.6;
+}
+
+.tb-item strong { color: var(--white); }
+
+.tb-item em {
+  font-size: 11px;
+  color: var(--gray500);
+  font-style: normal;
+  display: block;
+  margin-top: 3px;
+}
+
+/* ════════════════════════
+   REGULAMENTO
+   ════════════════════════ */
+.reg-article {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.reg-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  min-height: 48px;
+  transition: background .15s;
+}
+
+.reg-header:active { background: rgba(255,255,255,0.02); }
+
+.reg-header.open { border-bottom-color: var(--border); }
+
+.art-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--lime);
+  min-width: 44px;
+  flex-shrink: 0;
+}
+
+.art-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--white);
+  flex: 1;
+}
+
+.art-arrow {
+  width: 20px; height: 20px;
+  stroke: var(--gray500);
+  fill: none;
+  stroke-width: 2;
+  transition: transform .25s;
+  flex-shrink: 0;
+}
+
+.reg-header.open .art-arrow { transform: rotate(180deg); }
+
+.reg-body {
+  padding: 0 16px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease, padding .3s ease;
+}
+
+.reg-body.open {
+  padding: 14px 16px;
+  max-height: 800px;
+}
+
+.reg-body p {
+  font-size: 13px;
+  color: var(--gray300);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.reg-body p:last-child { margin-bottom: 0; }
+.reg-body strong { color: var(--white); }
+
+.reg-body ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reg-body ul li {
+  font-size: 13px;
+  color: var(--gray300);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.reg-body ul li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10px;
+  width: 4px; height: 4px;
+  background: var(--lime);
+  border-radius: 50%;
+}
+
+/* ════════════════════════
+   FINANCEIRO
+   ════════════════════════ */
+.fin-hero {
+  background: linear-gradient(135deg, var(--surface2), var(--surface));
+  border: 1px solid rgba(201,255,55,0.15);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  margin-bottom: 12px;
+}
+
+.fin-hero-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gray500);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.fin-hero-val {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 48px;
+  color: var(--lime);
+  line-height: 1;
+}
+
+.fin-hero-sub {
+  font-size: 12px;
+  color: var(--gray500);
+  margin-top: 6px;
+}
+
+.fin-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.fin-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--gray300);
+}
+
+.fin-row strong { color: var(--white); }
+
+.prize-big {
+  color: var(--lime);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.fin-sim-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.fin-sim-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gray500);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.fin-sim-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.fin-sim-row label {
+  display: block;
+  font-size: 11px;
+  color: var(--gray500);
+  letter-spacing: .5px;
+  margin-bottom: 4px;
+}
+
+.fin-sim-row input {
+  background: var(--surface2);
+  border: 1px solid rgba(201,255,55,0.20);
+  border-radius: var(--radius-sm);
+  color: var(--lime);
+  padding: 10px 12px;
+  font-size: 15px;
+  font-family: var(--font-mono);
+  width: 100px;
+  outline: none;
+  min-height: 44px;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.fin-sim-row input:focus {
+  border-color: var(--lime);
+  box-shadow: 0 0 0 3px rgba(201,255,55,0.08);
+}
+
+.calc-btn {
+  background: var(--lime);
+  color: var(--bg);
+  border: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 2px;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all .15s;
+  min-height: 44px;
+  text-transform: uppercase;
+}
+
+.calc-btn:active { transform: scale(0.97); background: var(--lime-dim); }
+
+#finRes {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--gray300);
+  line-height: 1.7;
+}
+
+/* ════════════════════════
+   BUTTONS
+   ════════════════════════ */
+.btn-danger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(227,6,19,0.06);
+  border: 1px solid rgba(227,6,19,0.20);
+  color: var(--red);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all .2s;
+  margin-top: 16px;
+  min-height: 44px;
+}
+
+.btn-danger:active { background: rgba(227,6,19,0.12); transform: scale(0.98); }
+
+.btn-danger svg {
+  width: 16px; height: 16px;
+  stroke: var(--red);
+  fill: none;
+  stroke-width: 2;
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--lime);
+  color: var(--bg);
+  border: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 2px;
+  padding: 14px 32px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all .15s;
+  margin: 32px auto 0;
+  min-height: 48px;
+  text-transform: uppercase;
+}
+
+.btn-primary:active { transform: scale(0.97); background: var(--lime-dim); }
+
+.btn-primary svg {
+  width: 18px; height: 18px;
+  stroke: var(--bg);
+  fill: none;
+  stroke-width: 2;
+}
+
+/* ════════════════════════
+   ADMIN LOCK
+   ════════════════════════ */
+.admin-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-bar svg {
+  width: 20px; height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.admin-bar.locked {
+  border-color: rgba(227,6,19,0.15);
+  color: var(--red);
+}
+
+.admin-bar.locked svg { stroke: var(--red); }
+
+.admin-bar.unlocked {
+  border-color: rgba(0,230,118,0.20);
+  color: var(--green);
+}
+
+.admin-bar.unlocked svg { stroke: var(--green); }
+
+.admin-bar-text {
+  flex: 1;
+  font-size: 13px;
+  color: var(--gray300);
+  line-height: 1.4;
+}
+
+.admin-bar-text strong {
+  color: var(--white);
+  display: block;
+  font-size: 12px;
+  letter-spacing: .5px;
+}
+
+.admin-bar-text span {
+  font-size: 11px;
+  color: var(--gray500);
+}
+
+.admin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: all .15s;
+  border: none;
+  flex-shrink: 0;
+}
+
+.admin-btn.unlock {
+  background: rgba(201,255,55,0.10);
+  border: 1px solid rgba(201,255,55,0.25);
+  color: var(--lime);
+}
+
+.admin-btn.unlock:active {
+  background: rgba(201,255,55,0.20);
+  transform: scale(0.97);
+}
+
+.admin-btn.lock {
+  background: rgba(227,6,19,0.08);
+  border: 1px solid rgba(227,6,19,0.20);
+  color: var(--red);
+}
+
+.admin-btn.lock:active {
+  background: rgba(227,6,19,0.15);
+  transform: scale(0.97);
+}
+
+/* Admin PIN modal */
+.pin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+}
+
+.pin-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pin-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+  transform: translateY(20px);
+  transition: transform .25s;
+}
+
+.pin-overlay.show .pin-modal {
+  transform: translateY(0);
+}
+
+.pin-modal svg {
+  width: 40px; height: 40px;
+  stroke: var(--lime);
+  fill: none;
+  stroke-width: 1.5;
+  margin-bottom: 16px;
+}
+
+.pin-modal h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.pin-modal p {
+  font-size: 13px;
+  color: var(--gray500);
+  margin-bottom: 20px;
+}
+
+.pin-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.pin-digit {
+  width: 48px; height: 56px;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--lime);
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  transition: all .2s;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.pin-digit::-webkit-inner-spin-button,
+.pin-digit::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+.pin-digit:focus {
+  border-color: var(--lime);
+  box-shadow: 0 0 0 3px rgba(201,255,55,0.12);
+}
+
+.pin-digit.error {
+  border-color: var(--red);
+  animation: shake .4s ease;
+}
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%,60% { transform: translateX(-6px); }
+  40%,80% { transform: translateX(6px); }
+}
+
+.pin-cancel {
+  background: none;
+  border: none;
+  color: var(--gray500);
+  font-family: var(--font-body);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 8px 16px;
+  min-height: 44px;
+  transition: color .2s;
+}
+
+.pin-cancel:active { color: var(--white); }
+
+.pin-error-msg {
+  font-size: 12px;
+  color: var(--red);
+  margin-top: -12px;
+  margin-bottom: 12px;
+  min-height: 18px;
+}
+
+/* Readonly scores */
+.s-in.readonly {
+  border-color: var(--border);
+  background: var(--surface);
+  color: var(--gray300);
+  pointer-events: none;
+  opacity: .7;
+}
+
+.s-in.readonly:empty,
+.s-in.readonly[value=""] {
+  color: var(--gray700);
+}
+
+/* ════════════════════════
+   FOOTER
+   ════════════════════════ */
+footer {
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 10px;
+  color: var(--gray700);
+  letter-spacing: 2px;
+  border-top: 1px solid var(--border);
+  margin-top: 32px;
+  font-family: var(--font-mono);
+}
+
+/* ════════════════════════
+   REDUCED MOTION
+   ════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ════════════════════════
+   PRINT
+   ════════════════════════ */
+@media print {
+  body { background: #0A0A0A !important; color: #F5F5F5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bottom-nav, .btn-primary, .btn-danger { display: none !important; }
+  .panel { display: block !important; }
+  .reg-body { max-height: none !important; padding: 14px 16px !important; }
+  .page { padding-bottom: 20px; }
+}
+
+/* ════════════════════════
+   TABLET+
+   ════════════════════════ */
+@media (min-width: 640px) {
+  .page { padding: 0 24px 100px; max-width: 700px; }
+  .hero { padding: 72px 32px 48px; }
+  .hero-stats { gap: 8px; }
+  .hstat { padding: 12px 20px; min-width: 90px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════ HERO ════ -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge"><span class="dot"></span>Torneio de Amigos &middot; Beach Tennis</div>
+  <div class="hero-title">
+    <span class="t-smoke-wrap"><span class="t-outline">SUPER</span><span class="smoke s1"></span><span class="smoke s2"></span><span class="smoke s3"></span></span>
+    <span class="t-fill">8</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-val">02/05</div><div class="hstat-label">Data</div></div>
+    <div class="hstat"><div class="hstat-val">07:00</div><div class="hstat-label">Inicio</div></div>
+    <div class="hstat"><div class="hstat-val">11:00</div><div class="hstat-label">Encerra</div></div>
+    <div class="hstat"><div class="hstat-val">14</div><div class="hstat-label">Partidas</div></div>
+    <div class="hstat"><div class="hstat-val">8</div><div class="hstat-label">Atletas</div></div>
+    <div class="hstat"><div class="hstat-val">4</div><div class="hstat-label">Games</div></div>
+    <div class="hstat"><div class="hstat-val">15m</div><div class="hstat-label">P/Jogo</div></div>
+  </div>
+  <div class="hero-line"></div>
+</div>
+
+<!-- ════ BOTTOM NAVIGATION ════ -->
+<nav class="bottom-nav" role="tablist">
+  <button class="nav-btn on" onclick="nav('atletas',this)" role="tab" aria-selected="true" aria-label="Atletas">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span>Atletas</span>
+  </button>
+  <button class="nav-btn" onclick="nav('cronograma',this)" role="tab" aria-selected="false" aria-label="Jogos">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>Jogos</span>
+  </button>
+  <button class="nav-btn" onclick="nav('placar',this)" role="tab" aria-selected="false" aria-label="Placar">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+    <span>Placar</span>
+  </button>
+  <button class="nav-btn" onclick="nav('ranking',this)" role="tab" aria-selected="false" aria-label="Ranking">
+    <svg viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 7 7 7 7"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5C17 4 17 7 17 7"/><path d="M4 22h16"/><path d="M10 22V8h4v14"/><path d="M6 22V12h4"/><path d="M14 22V12h4"/></svg>
+    <span>Ranking</span>
+  </button>
+  <button class="nav-btn" onclick="nav('regulamento',this)" role="tab" aria-selected="false" aria-label="Regras">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <span>Regras</span>
+  </button>
+  <button class="nav-btn" onclick="nav('financeiro',this)" role="tab" aria-selected="false" aria-label="Financeiro">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    <span>Grana</span>
+  </button>
+</nav>
+
+<div class="page">
+
+<!-- ═══════════════════════════════════════
+     ATLETAS
+     ═══════════════════════════════════════ -->
+<div id="p-atletas" class="panel on">
+
+  <div class="sh"><span class="sh-tag">01</span><h2>Os 8 Atletas</h2><div class="sh-line"></div></div>
+
+  <div class="athletes-grid" id="athletesGrid"></div>
+
+  <!-- Athlete Detail Modal -->
+  <div class="athlete-modal-overlay" id="athleteModal" onclick="if(event.target===this)closeAthleteModal()">
+    <div class="athlete-modal">
+      <div class="athlete-modal-header">
+        <img id="amImg" src="" alt="">
+        <button class="athlete-modal-close" onclick="closeAthleteModal()">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="athlete-modal-info">
+        <div class="athlete-modal-letter" id="amLetter"></div>
+        <div class="athlete-modal-name" id="amName"></div>
+        <div class="athlete-modal-subtitle" id="amSub"></div>
+      </div>
+      <div class="athlete-modal-body">
+        <div class="am-section-title">Winrate Geral</div>
+        <div class="am-winrate-block">
+          <div class="am-winrate-circle" id="amCircle">
+            <svg viewBox="0 0 56 56"><circle class="bg" cx="28" cy="28" r="24"/><circle class="fg" id="amCircleFg" cx="28" cy="28" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8"/></svg>
+            <span id="amWinPct"></span>
+          </div>
+          <div class="am-winrate-text">
+            <strong id="amWinLabel">WIN RATE</strong>
+            <span id="amWinDesc"></span>
+          </div>
+        </div>
+
+        <div class="am-section-title">Temporada 2026</div>
+        <div class="am-stats-grid" id="amStats2026"></div>
+
+        <div class="am-section-title">Carreira Geral</div>
+        <div class="am-stats-grid" id="amStatsGeral"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh"><span class="sh-tag">02</span><h2>Formato</h2><div class="sh-line"></div></div>
+
+  <div class="format-grid">
+    <div class="format-card">
+      <div class="format-label">Estrutura</div>
+      <div class="format-chips">
+        <span class="chip lime">Duplas Rotativas</span>
+        <span class="chip cyan">7 Rodadas</span>
+        <span class="chip cyan">14 Partidas</span>
+        <span class="chip green">7 Jogos/Atleta</span>
+      </div>
+    </div>
+    <div class="format-card">
+      <div class="format-label">Pontuacao</div>
+      <div class="format-body">
+        Cada atleta acumula <strong>saldo individual</strong> de games independente do parceiro.<br>
+        <strong>Saldo = GV - GP</strong> em todas as partidas.<br>
+        Maior saldo = <strong>Campeao</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box" style="margin-top:10px;">
+    <strong>Sorteio matematico:</strong> cada atleta joga com todos os outros como parceiro exatamente 1 vez. 28/28 parcerias cobertas. Algoritmo baseado em 1-fatoriza&ccedil;&atilde;o do grafo completo K8.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     CRONOGRAMA
+     ═══════════════════════════════════════ -->
+<div id="p-cronograma" class="panel">
+
+  <div class="sh"><span class="sh-tag">02</span><h2>Cronograma &middot; 02/05</h2><div class="sh-line"></div></div>
+
+  <div class="info-box" style="margin-bottom:14px;">
+    <strong>15 min por partida</strong> &middot; 5 min de intervalo entre rodadas &middot; Inicio 07:00 &middot; Encerramento 11:00 &middot; Set de <strong>3 games</strong>
+  </div>
+
+  <div class="schedule-wrap">
+
+    <div class="break-bar">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      AQUECIMENTO &middot; 06:40 - 07:00
+    </div>
+
+    <!-- R1 -->
+    <div class="round-head"><span class="r-label">Rodada 1</span><span class="r-time">07:00 - 07:30</span></div>
+    <div class="match-row"><div class="match-time">07:00</div><div class="match-teams"><div class="m-team"><div class="m-player">Tiago</div><div class="m-player">Demetrius</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Polenta</div><div class="m-player">Matheus S</div></div></div><div class="match-id">J01</div></div>
+    <div class="match-row"><div class="match-time">07:15</div><div class="match-teams"><div class="m-team"><div class="m-player">Bruno</div><div class="m-player">Matheus P</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Fabio</div><div class="m-player">Igo</div></div></div><div class="match-id">J02</div></div>
+
+    <div class="break-bar"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>INTERVALO 5 MIN</div>
+
+    <!-- R2 -->
+    <div class="round-head"><span class="r-label">Rodada 2</span><span class="r-time">07:35 - 08:05</span></div>
+    <div class="match-row"><div class="match-time">07:35</div><div class="match-teams"><div class="m-team"><div class="m-player">Tiago</div><div class="m-player">Matheus S</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Demetrius</div><div class="m-player">Matheus P</div></div></div><div class="match-id">J03</div></div>
+    <div class="match-row"><div class="match-time">07:50</div><div class="match-teams"><div class="m-team"><div class="m-player">Polenta</div><div class="m-player">Igo</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Bruno</div><div class="m-player">Fabio</div></div></div><div class="match-id">J04</div></div>
+
+    <div class="break-bar"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>INTERVALO 5 MIN</div>
+
+    <!-- R3 -->
+    <div class="round-head"><span class="r-label">Rodada 3</span><span class="r-time">08:10 - 08:40</span></div>
+    <div class="match-row"><div class="match-time">08:10</div><div class="match-teams"><div class="m-team"><div class="m-player">Tiago</div><div class="m-player">Matheus P</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Matheus S</div><div class="m-player">Igo</div></div></div><div class="match-id">J05</div></div>
+    <div class="match-row"><div class="match-time">08:25</div><div class="match-teams"><div class="m-team"><div class="m-player">Demetrius</div><div class="m-player">Fabio</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Polenta</div><div class="m-player">Bruno</div></div></div><div class="match-id">J06</div></div>
+
+    <div class="break-bar"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>INTERVALO 5 MIN</div>
+
+    <!-- R4 -->
+    <div class="round-head"><span class="r-label">Rodada 4</span><span class="r-time">08:45 - 09:15</span></div>
+    <div class="match-row"><div class="match-time">08:45</div><div class="match-teams"><div class="m-team"><div class="m-player">Tiago</div><div class="m-player">Igo</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Matheus P</div><div class="m-player">Fabio</div></div></div><div class="match-id">J07</div></div>
+    <div class="match-row"><div class="match-time">09:00</div><div class="match-teams"><div class="m-team"><div class="m-player">Matheus S</div><div class="m-player">Bruno</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Demetrius</div><div class="m-player">Polenta</div></div></div><div class="match-id">J08</div></div>
+
+    <div class="break-bar"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>INTERVALO 5 MIN</div>
+
+    <!-- R5 -->
+    <div class="round-head"><span class="r-label">Rodada 5</span><span class="r-time">09:20 - 09:50</span></div>
+    <div class="match-row"><div class="match-time">09:20</div><div class="match-teams"><div class="m-team"><div class="m-player">Tiago</div><div class="m-player">Fabio</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Igo</div><div class="m-player">Bruno</div></div></div><div class="match-id">J09</div></div>
+    <div class="match-row"><div class="match-time">09:35</div><div class="match-teams"><div class="m-team"><div class="m-player">Matheus P</div><div class="m-player">Polenta</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Matheus S</div><div class="m-player">Demetrius</div></div></div><div class="match-id">J10</div></div>
+
+    <div class="break-bar"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>INTERVALO 5 MIN</div>
+
+    <!-- R6 -->
+    <div class="round-head"><span class="r-label">Rodada 6</span><span class="r-time">09:55 - 10:25</span></div>
+    <div class="match-row"><div class="match-time">09:55</div><div class="match-teams"><div class="m-team"><div class="m-player">Tiago</div><div class="m-player">Bruno</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Fabio</div><div class="m-player">Polenta</div></div></div><div class="match-id">J11</div></div>
+    <div class="match-row"><div class="match-time">10:10</div><div class="match-teams"><div class="m-team"><div class="m-player">Igo</div><div class="m-player">Demetrius</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Matheus P</div><div class="m-player">Matheus S</div></div></div><div class="match-id">J12</div></div>
+
+    <div class="break-bar"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>INTERVALO 5 MIN</div>
+
+    <!-- R7 -->
+    <div class="round-head"><span class="r-label">Rodada 7</span><span class="r-time">10:30 - 11:00</span></div>
+    <div class="match-row"><div class="match-time">10:30</div><div class="match-teams"><div class="m-team"><div class="m-player">Tiago</div><div class="m-player">Polenta</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Bruno</div><div class="m-player">Demetrius</div></div></div><div class="match-id">J13</div></div>
+    <div class="match-row"><div class="match-time">10:45</div><div class="match-teams"><div class="m-team"><div class="m-player">Fabio</div><div class="m-player">Matheus S</div></div><div class="m-vs">VS</div><div class="m-team right"><div class="m-player">Igo</div><div class="m-player">Matheus P</div></div></div><div class="match-id">J14</div></div>
+
+    <div class="end-bar">
+      <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+      ENCERRAMENTO &middot; 11:00 &middot; PREMIACAO + CHURRASCO
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PLACAR
+     ═══════════════════════════════════════ -->
+<div id="p-placar" class="panel">
+
+  <div class="sh"><span class="sh-tag">03</span><h2>Placares</h2><div class="sh-line"></div></div>
+
+  <!-- Admin Lock Bar -->
+  <div class="admin-bar locked" id="adminBar">
+    <svg viewBox="0 0 24 24" id="adminIcon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <div class="admin-bar-text">
+      <strong id="adminTitle">Modo Visualizacao</strong>
+      <span id="adminDesc">Somente o admin pode editar os placares</span>
+    </div>
+    <button class="admin-btn unlock" id="adminToggle" onclick="handleAdminToggle()">
+      <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+      <span id="adminBtnText">Entrar</span>
+    </button>
+  </div>
+
+  <div id="scoreForm"></div>
+
+  <button class="btn-danger" id="btnReset" onclick="resetScores()" style="display:none;">
+    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+    Limpar todos os resultados
+  </button>
+</div>
+
+<!-- PIN Modal -->
+<div class="pin-overlay" id="pinOverlay">
+  <div class="pin-modal">
+    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <h3>ACESSO ADMIN</h3>
+    <p>Digite o PIN de 4 digitos</p>
+    <div class="pin-error-msg" id="pinError"></div>
+    <div class="pin-inputs">
+      <input class="pin-digit" type="tel" maxlength="1" inputmode="numeric" id="pin0" autocomplete="off">
+      <input class="pin-digit" type="tel" maxlength="1" inputmode="numeric" id="pin1" autocomplete="off">
+      <input class="pin-digit" type="tel" maxlength="1" inputmode="numeric" id="pin2" autocomplete="off">
+      <input class="pin-digit" type="tel" maxlength="1" inputmode="numeric" id="pin3" autocomplete="off">
+    </div>
+    <button class="pin-cancel" onclick="closePinModal()">Cancelar</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     RANKING
+     ═══════════════════════════════════════ -->
+<div id="p-ranking" class="panel">
+
+  <div class="sh"><span class="sh-tag">04</span><h2>Ranking Individual</h2><div class="sh-line"></div></div>
+  <p style="font-size:12px;color:var(--gray500);margin-bottom:14px;">Classificacao por <strong style="color:var(--lime)">saldo de games (GV - GP)</strong>. Desempate por criterios CBT/ITF.</p>
+
+  <div class="rank-scroll">
+    <table class="rank-table">
+      <thead>
+        <tr>
+          <th style="width:40px">#</th>
+          <th>Atleta</th>
+          <th>GV</th><th>GP</th>
+          <th>Saldo</th>
+          <th>Avg</th>
+          <th>V/D</th>
+        </tr>
+      </thead>
+      <tbody id="rankBody"></tbody>
+    </table>
+  </div>
+
+  <div class="sh"><span class="sh-tag">05</span><h2>Criterios de Desempate</h2><div class="sh-line"></div></div>
+
+  <div class="card">
+    <div class="tb-item">
+      <span class="tb-n">1</span>
+      <p><strong>Confronto direto</strong> -- saldo de games nos jogos disputados entre os atletas empatados. <em>Base: Regulamento CBT 2024, Art. 15</em></p>
+    </div>
+    <div class="tb-item">
+      <span class="tb-n">2</span>
+      <p><strong>Game Average</strong> -- soma dos quocientes GV / (GV+GP) de cada partida. Maior valor avanca. <em>Ex: 3x1 = 3/4=0,75 | 3x2 = 3/5=0,60</em></p>
+    </div>
+    <div class="tb-item">
+      <span class="tb-n">3</span>
+      <p><strong>Saldo absoluto</strong> -- total de games vencidos menos perdidos em todo o torneio. <em>Base: CBT, criterio de saldo de games</em></p>
+    </div>
+    <div class="tb-item">
+      <span class="tb-n">4</span>
+      <p><strong>Maior numero de vitorias</strong> -- partidas em que a dupla do atleta venceu. <em>Base: ITF Rules 2023</em></p>
+    </div>
+    <div class="tb-item">
+      <span class="tb-n">5</span>
+      <p><strong>Super Tiebreak decisivo</strong> -- 10 pontos, vantagem minima de 2, disputado entre os atletas ainda empatados apos todos os criterios anteriores. <em>Base: ITF Rules 2023, Regra 7</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     REGULAMENTO
+     ═══════════════════════════════════════ -->
+<div id="p-regulamento" class="panel">
+
+  <div class="sh"><span class="sh-tag">06</span><h2>Regulamento Oficial</h2><div class="sh-line"></div></div>
+
+  <div class="info-box" style="margin-bottom:14px;">
+    Baseado nas <strong>Regras ITF Beach Tennis 2023</strong> e <strong>Regulamento CBT 2024</strong>. Adaptado para torneio amador de duplas rotativas.
+  </div>
+
+  <div class="reg-article">
+    <div class="reg-header open" onclick="toggleReg(this)">
+      <span class="art-num">Art. 1</span><span class="art-title">Objetivo e Participantes</span>
+      <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="reg-body open">
+      <p>O torneio <strong>Super 8</strong> e uma competicao amadora de Beach Tennis no formato de <strong>duplas rotativas</strong>, disputado em pontos corridos com classificacao por saldo individual de games.</p>
+      <p>Participam <strong>8 atletas</strong>, todos previamente confirmados via grupo do WhatsApp "Super 8". A participacao implica total conhecimento e aceitacao deste regulamento.</p>
+    </div>
+  </div>
+
+  <div class="reg-article">
+    <div class="reg-header open" onclick="toggleReg(this)">
+      <span class="art-num">Art. 2</span><span class="art-title">Data, Local e Horario</span>
+      <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="reg-body open">
+      <ul>
+        <li><strong>Data:</strong> 02 de maio de 2025 (sabado)</li>
+        <li><strong>Aquecimento:</strong> 06:40 -- presenca obrigatoria</li>
+        <li><strong>Inicio:</strong> 07:00 em ponto</li>
+        <li><strong>Encerramento:</strong> 11:00 (premiacao + churrasco)</li>
+        <li><strong>Quadra:</strong> 1 quadra oficial de Beach Tennis</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reg-article">
+    <div class="reg-header" onclick="toggleReg(this)">
+      <span class="art-num">Art. 3</span><span class="art-title">Formato de Disputa</span>
+      <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="reg-body">
+      <p><strong>3.1 Duplas rotativas:</strong> as duplas sao pre-sorteadas por algoritmo matematico de forma que cada atleta jogue com todos os outros ao menos uma vez como parceiro ao longo do torneio.</p>
+      <p><strong>3.2 Total de rodadas:</strong> 7 rodadas, 2 partidas por rodada, 14 partidas no total. Cada atleta disputa 7 partidas.</p>
+      <p><strong>3.3 Tempo por partida:</strong> 15 minutos. Intervalos de 5 minutos entre rodadas.</p>
+      <p><strong>3.4 Pontuacao individual:</strong> o saldo de games de cada partida e computado individualmente para cada atleta, independente de qual foi seu parceiro na rodada.</p>
+    </div>
+  </div>
+
+  <div class="reg-article">
+    <div class="reg-header" onclick="toggleReg(this)">
+      <span class="art-num">Art. 4</span><span class="art-title">Regras do Jogo (ITF 2023)</span>
+      <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="reg-body">
+      <p><strong>4.1 Set:</strong> 1 set de 3 games (adaptacao para formato amador de tempo reduzido). Primeiro a 3 games vence.</p>
+      <p><strong>4.2 Empate 2-2 em games:</strong> disputa-se Super Tiebreak de 10 pontos. Vencedor recebe 3 games na tabela, perdedor 2.</p>
+      <p><strong>4.3 Pontuacao no game (ITF No-Ad):</strong> 0, 15, 30, 40. Em deuce (40-40): disputa-se ponto decisivo unico (sem vantagem). Quem vencer o ad-point vence o game.</p>
+      <p><strong>4.4 Saque:</strong> apenas 1 saque por ponto (sem segundo saque). Foot fault = falta. Let = ponto repetido.</p>
+      <p><strong>4.5 Troca de lado:</strong> apos o 2o game de cada set, conforme Regra 11 ITF.</p>
+      <p><strong>4.6 Quadra:</strong> retangulo 16m x 8m (duplas). Rede a 1,70m. Superficie de areia nivelada.</p>
+    </div>
+  </div>
+
+  <div class="reg-article">
+    <div class="reg-header" onclick="toggleReg(this)">
+      <span class="art-num">Art. 5</span><span class="art-title">Pontualidade e WO</span>
+      <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="reg-body">
+      <p><strong>5.1</strong> Todo atleta deve estar presente as <strong>06:40</strong> para aquecimento e orientacoes. O torneio inicia impreterivelmente as <strong>07:00</strong>.</p>
+      <ul>
+        <li><strong>Ate 5 min de atraso:</strong> advertencia verbal. O jogo inicia sem o atleta atrasado -- o parceiro joga sozinho ate o atleta entrar.</li>
+        <li><strong>5 a 10 min de atraso:</strong> perda de 1 game na contagem individual.</li>
+        <li><strong>Mais de 10 min / nao comparecimento:</strong> WO -- a partida e dada como derrota por 0x3, computando -3 no saldo individual do atleta ausente.</li>
+      </ul>
+      <p><strong>5.2 WO por desistencia:</strong> caso um atleta se retire do torneio apos o inicio, todos os seus jogos restantes sao computados como derrota por 0x3.</p>
+    </div>
+  </div>
+
+  <div class="reg-article">
+    <div class="reg-header" onclick="toggleReg(this)">
+      <span class="art-num">Art. 6</span><span class="art-title">Conduta Esportiva</span>
+      <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="reg-body">
+      <ul>
+        <li>Discussoes excessivas: advertencia verbal pelo coordenador.</li>
+        <li>Reincidencia: perda de 1 game na partida em curso.</li>
+        <li>Comportamento antidesportivo grave: eliminacao do torneio (decisao do coordenador).</li>
+        <li>Em duvida de bola boa/fora sem arbitro: ponto repetido, sem discussao.</li>
+        <li>Cada atleta e responsavel pelas marcacoes do seu lado da quadra.</li>
+        <li>Base: Codigo de Conduta CBT 2024, Apendice 1.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reg-article">
+    <div class="reg-header" onclick="toggleReg(this)">
+      <span class="art-num">Art. 7</span><span class="art-title">Classificacao e Premiacao</span>
+      <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="reg-body">
+      <p><strong>7.1</strong> Classificacao por <strong>saldo individual de games</strong> (GV - GP) acumulado em todas as 7 partidas.</p>
+      <p><strong>7.2 Criterios de desempate</strong> (em ordem): (1) Confronto direto, (2) Game Average, (3) Saldo absoluto, (4) Maior no. de vitorias, (5) Super Tiebreak de 10 pontos.</p>
+      <p><strong>7.3 Premiacao:</strong> 50% do total arrecadado (R$ 240,00) para o 1o colocado. Em caso de empate apos todos os criterios, o premio e dividido igualmente entre os atletas empatados.</p>
+      <p><strong>7.4</strong> A premiacao e realizada ao fim do torneio, as 11:00, antes do churrasco.</p>
+    </div>
+  </div>
+
+  <div class="reg-article">
+    <div class="reg-header" onclick="toggleReg(this)">
+      <span class="art-num">Art. 8</span><span class="art-title">Disposicoes Gerais</span>
+      <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="reg-body">
+      <ul>
+        <li>Casos omissos serao resolvidos pelo coordenador do torneio, cuja decisao e soberana.</li>
+        <li>A inscricao implica ciencia e concordancia com todos os artigos deste regulamento.</li>
+        <li>Bebidas alcoolicas: cada atleta leva a sua. Consumo moderado durante o torneio.</li>
+        <li>Este regulamento segue subsidiariamente as Regras ITF Beach Tennis 2023 e o Regulamento CBT 2024 em todos os pontos nao cobertos acima.</li>
+      </ul>
+    </div>
+  </div>
+
+  <button class="btn-primary" onclick="window.print()">
+    <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    Imprimir Regulamento
+  </button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     FINANCEIRO
+     ═══════════════════════════════════════ -->
+<div id="p-financeiro" class="panel">
+
+  <div class="sh"><span class="sh-tag">10</span><h2>Financeiro</h2><div class="sh-line"></div></div>
+
+  <div class="fin-hero">
+    <div class="fin-hero-label">Premio do Campeao</div>
+    <div class="fin-hero-val" id="fPrize">R$ 240</div>
+    <div class="fin-hero-sub">50% do total arrecadado</div>
+    <div class="fin-breakdown">
+      <div class="fin-row"><span>Inscricao por atleta</span><strong id="fInsc">R$ 60,00</strong></div>
+      <div class="fin-row"><span>Total arrecadado (8x)</span><strong id="fTotal">R$ 480,00</strong></div>
+      <div class="fin-row"><span>Churrasco (50%)</span><strong id="fChurrasco">R$ 240,00</strong></div>
+      <div class="fin-row"><span>Bebida</span><strong>Cada um traz a sua</strong></div>
+      <div class="fin-row"><span>Premio 1o (50%)</span><span class="prize-big" id="fPrize2">R$ 240</span></div>
+    </div>
+  </div>
+
+  <div class="fin-sim-card">
+    <div class="fin-sim-label">Simular Outro Valor</div>
+    <div class="fin-sim-row">
+      <div><label>Inscricao (R$)</label><input type="number" id="simV" value="60" min="20" step="5" inputmode="numeric"></div>
+      <div><label>% Premio</label><input type="number" id="simP" value="50" min="10" max="90" step="5" inputmode="numeric" style="width:80px"></div>
+      <button class="calc-btn" onclick="calcFin()">Calcular</button>
+    </div>
+    <div id="finRes"></div>
+  </div>
+</div>
+
+</div><!-- end .page -->
+
+<footer>SUPER 8 &middot; BEACH TENNIS &middot; 02/05/2025 &middot; ITF 2023 / CBT 2024</footer>
+
+<script>
+/* ══ DATA ══ */
+const PLAYERS=['Tiago','Demetrius','Polenta','Bruno','Fabio','Igo','Matheus P','Matheus S'];
+const MATCHES=[
+  {r:1,j:1,da:['Tiago','Demetrius'],db:['Polenta','Matheus S']},
+  {r:1,j:2,da:['Bruno','Matheus P'],db:['Fabio','Igo']},
+  {r:2,j:3,da:['Tiago','Matheus S'],db:['Demetrius','Matheus P']},
+  {r:2,j:4,da:['Polenta','Igo'],db:['Bruno','Fabio']},
+  {r:3,j:5,da:['Tiago','Matheus P'],db:['Matheus S','Igo']},
+  {r:3,j:6,da:['Demetrius','Fabio'],db:['Polenta','Bruno']},
+  {r:4,j:7,da:['Tiago','Igo'],db:['Matheus P','Fabio']},
+  {r:4,j:8,da:['Matheus S','Bruno'],db:['Demetrius','Polenta']},
+  {r:5,j:9,da:['Tiago','Fabio'],db:['Igo','Bruno']},
+  {r:5,j:10,da:['Matheus P','Polenta'],db:['Matheus S','Demetrius']},
+  {r:6,j:11,da:['Tiago','Bruno'],db:['Fabio','Polenta']},
+  {r:6,j:12,da:['Igo','Demetrius'],db:['Matheus P','Matheus S']},
+  {r:7,j:13,da:['Tiago','Polenta'],db:['Bruno','Demetrius']},
+  {r:7,j:14,da:['Fabio','Matheus S'],db:['Igo','Matheus P']}
+];
+
+let scores={};
+MATCHES.forEach(m=>{scores[m.j]={a:'',b:''};});
+
+/* ══ ADMIN AUTH ══ */
+const ADMIN_PIN='0205'; // PIN = data do torneio
+let isAdmin=false;
+
+function checkAdminSession(){
+  try{
+    const s=localStorage.getItem('s8admin');
+    if(s){
+      const d=JSON.parse(s);
+      // Session expires after 12 hours
+      if(d.t && (Date.now()-d.t)<43200000){
+        isAdmin=true;
+        return;
+      }
+    }
+  }catch(e){}
+  isAdmin=false;
+}
+
+function setAdminSession(val){
+  isAdmin=val;
+  if(val){
+    localStorage.setItem('s8admin',JSON.stringify({t:Date.now()}));
+  }else{
+    localStorage.removeItem('s8admin');
+  }
+}
+
+function updateAdminUI(){
+  const bar=document.getElementById('adminBar');
+  const icon=document.getElementById('adminIcon');
+  const title=document.getElementById('adminTitle');
+  const desc=document.getElementById('adminDesc');
+  const btn=document.getElementById('adminToggle');
+  const btnText=document.getElementById('adminBtnText');
+  const btnReset=document.getElementById('btnReset');
+
+  if(isAdmin){
+    bar.className='admin-bar unlocked';
+    icon.innerHTML='<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/>';
+    title.textContent='Modo Admin';
+    desc.textContent='Voce pode editar os placares';
+    btn.className='admin-btn lock';
+    btn.querySelector('svg').innerHTML='<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>';
+    btnText.textContent='Sair';
+    btnReset.style.display='flex';
+  }else{
+    bar.className='admin-bar locked';
+    icon.innerHTML='<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>';
+    title.textContent='Modo Visualizacao';
+    desc.textContent='Somente o admin pode editar os placares';
+    btn.className='admin-btn unlock';
+    btn.querySelector('svg').innerHTML='<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/>';
+    btnText.textContent='Entrar';
+    btnReset.style.display='none';
+  }
+
+  // Toggle readonly on all score inputs
+  document.querySelectorAll('.s-in').forEach(inp=>{
+    if(isAdmin){
+      inp.classList.remove('readonly');
+      inp.removeAttribute('readonly');
+      inp.removeAttribute('tabindex');
+    }else{
+      inp.classList.add('readonly');
+      inp.setAttribute('readonly','');
+      inp.setAttribute('tabindex','-1');
+    }
+  });
+}
+
+function handleAdminToggle(){
+  if(isAdmin){
+    setAdminSession(false);
+    updateAdminUI();
+    showToast('Modo admin desativado');
+  }else{
+    openPinModal();
+  }
+}
+
+/* ══ PIN MODAL ══ */
+function openPinModal(){
+  const overlay=document.getElementById('pinOverlay');
+  document.getElementById('pinError').textContent='';
+  overlay.classList.add('show');
+  // Clear and focus first digit
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('pin'+i);
+    d.value='';
+    d.classList.remove('error');
+  }
+  setTimeout(()=>document.getElementById('pin0').focus(),200);
+}
+
+function closePinModal(){
+  document.getElementById('pinOverlay').classList.remove('show');
+}
+
+function checkPin(){
+  let pin='';
+  for(let i=0;i<4;i++) pin+=document.getElementById('pin'+i).value;
+  if(pin.length<4) return;
+
+  if(pin===ADMIN_PIN){
+    closePinModal();
+    setAdminSession(true);
+    updateAdminUI();
+    showToast('Modo admin ativado!');
+  }else{
+    document.getElementById('pinError').textContent='PIN incorreto. Tente novamente.';
+    for(let i=0;i<4;i++){
+      const d=document.getElementById('pin'+i);
+      d.classList.add('error');
+      d.value='';
+    }
+    setTimeout(()=>{
+      for(let i=0;i<4;i++) document.getElementById('pin'+i).classList.remove('error');
+      document.getElementById('pin0').focus();
+    },500);
+  }
+}
+
+// PIN input behavior: auto-advance, backspace, paste
+document.addEventListener('DOMContentLoaded',()=>{
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('pin'+i);
+    d.addEventListener('input',e=>{
+      const v=e.target.value.replace(/\D/g,'');
+      e.target.value=v.slice(-1);
+      if(v && i<3) document.getElementById('pin'+(i+1)).focus();
+      if(i===3 && v) checkPin();
+    });
+    d.addEventListener('keydown',e=>{
+      if(e.key==='Backspace' && !e.target.value && i>0){
+        document.getElementById('pin'+(i-1)).focus();
+      }
+      if(e.key==='Escape') closePinModal();
+    });
+    d.addEventListener('paste',e=>{
+      e.preventDefault();
+      const paste=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,4);
+      for(let k=0;k<paste.length&&k<4;k++){
+        document.getElementById('pin'+k).value=paste[k];
+      }
+      if(paste.length>=4) checkPin();
+      else if(paste.length>0) document.getElementById('pin'+Math.min(paste.length,3)).focus();
+    });
+  }
+
+  // Close modal on overlay click
+  document.getElementById('pinOverlay').addEventListener('click',e=>{
+    if(e.target===e.currentTarget) closePinModal();
+  });
+});
+
+function save(){try{localStorage.setItem('s8v4',JSON.stringify(scores));}catch(e){}}
+function load(){try{const s=localStorage.getItem('s8v4');if(s)scores=JSON.parse(s);}catch(e){}}
+
+/* ══ SCORE FORM ══ */
+function buildForm(){
+  const el=document.getElementById('scoreForm');
+  let h='',cr=0;
+  const ro=isAdmin?'':'readonly';
+  const roClass=isAdmin?'s-in':'s-in readonly';
+  const roTab=isAdmin?'':'tabindex="-1"';
+  MATCHES.forEach(m=>{
+    if(m.r!==cr){
+      cr=m.r;
+      h+=`<div class="score-round-title">Rodada ${m.r}</div>`;
+    }
+    const va=scores[m.j]?.a??'',vb=scores[m.j]?.b??'';
+    h+=`<div class="score-card" id="sc${m.j}">
+      <div class="score-team"><div class="score-player">${m.da[0]}</div><div class="score-player">${m.da[1]}</div></div>
+      <div class="score-mid">
+        <div class="score-jlabel">J${String(m.j).padStart(2,'0')}</div>
+        <div class="score-inputs">
+          <input class="${roClass}" id="sa${m.j}" type="number" min="0" max="3" value="${va}" placeholder="—" inputmode="numeric" ${ro} ${roTab} oninput="onS(${m.j})">
+          <span class="s-sep">x</span>
+          <input class="${roClass}" id="sb${m.j}" type="number" min="0" max="3" value="${vb}" placeholder="—" inputmode="numeric" ${ro} ${roTab} oninput="onS(${m.j})">
+        </div>
+      </div>
+      <div class="score-team r"><div class="score-player">${m.db[0]}</div><div class="score-player">${m.db[1]}</div></div>
+    </div>`;
+  });
+  el.innerHTML=h;
+  // Apply won states
+  MATCHES.forEach(m=>{
+    const na=parseInt(scores[m.j]?.a),nb=parseInt(scores[m.j]?.b);
+    const card=document.getElementById(`sc${m.j}`);
+    if(card&&!isNaN(na)&&!isNaN(nb)){
+      if(na>nb)card.classList.add('won-a');
+      else if(nb>na)card.classList.add('won-b');
+    }
+  });
+}
+
+function onS(j){
+  if(!isAdmin) return; // safety check
+  const a=document.getElementById(`sa${j}`)?.value??'';
+  const b=document.getElementById(`sb${j}`)?.value??'';
+  scores[j]={a,b};
+  const card=document.getElementById(`sc${j}`);
+  if(card){
+    card.classList.remove('won-a','won-b');
+    const na=parseInt(a),nb=parseInt(b);
+    if(!isNaN(na)&&!isNaN(nb)){
+      if(na>nb)card.classList.add('won-a');
+      else if(nb>na)card.classList.add('won-b');
+    }
+  }
+  save();updateRank();
+}
+
+function resetScores(){
+  if(!isAdmin) return;
+  if(!confirm('Limpar todos os resultados?'))return;
+  MATCHES.forEach(m=>{scores[m.j]={a:'',b:''};});
+  save();buildForm();updateRank();
+}
+
+/* ══ RANKING ══ */
+function updateRank(){
+  let st={};
+  PLAYERS.forEach(p=>{st[p]={gv:0,gp:0,wins:0,losses:0,asum:0,an:0};});
+  MATCHES.forEach(m=>{
+    const va=parseInt(scores[m.j]?.a),vb=parseInt(scores[m.j]?.b);
+    if(isNaN(va)||isNaN(vb))return;
+    const tot=va+vb;
+    m.da.forEach(p=>{
+      st[p].gv+=va;st[p].gp+=vb;
+      if(tot>0){st[p].asum+=va/tot;st[p].an++;}
+      if(va>vb)st[p].wins++;else if(vb>va)st[p].losses++;
+    });
+    m.db.forEach(p=>{
+      st[p].gv+=vb;st[p].gp+=va;
+      if(tot>0){st[p].asum+=vb/tot;st[p].an++;}
+      if(vb>va)st[p].wins++;else if(va>vb)st[p].losses++;
+    });
+  });
+  let data=PLAYERS.map(p=>({
+    n:p,gv:st[p].gv,gp:st[p].gp,
+    saldo:st[p].gv-st[p].gp,
+    avgN:st[p].an>0?st[p].asum/st[p].an:-1,
+    avgS:st[p].an>0?(st[p].asum/st[p].an).toFixed(3):'—',
+    w:st[p].wins,l:st[p].losses
+  }));
+  data.sort((a,b)=>{
+    if(b.saldo!==a.saldo)return b.saldo-a.saldo;
+    if(b.avgN!==a.avgN)return b.avgN-a.avgN;
+    if(b.gv!==a.gv)return b.gv-a.gv;
+    return b.w-a.w;
+  });
+  const icons=['&#129351;','&#129352;','&#129353;','4','5','6','7','8'];
+  const tb=document.getElementById('rankBody');
+  tb.innerHTML=data.map((d,i)=>{
+    const sc=d.saldo>0?'saldo-p':d.saldo<0?'saldo-n':'saldo-z';
+    const sp=d.saldo>0?'+':'';
+    return `<tr class="rank-row">
+      <td><span class="pos-icon">${icons[i]}</span></td>
+      <td>${d.n}</td>
+      <td style="color:var(--green);font-weight:700;font-family:var(--font-mono)">${d.gv}</td>
+      <td style="color:var(--red);font-family:var(--font-mono)">${d.gp}</td>
+      <td class="${sc}">${sp}${d.saldo}</td>
+      <td class="avg-val">${d.avgS}</td>
+      <td style="color:var(--gray500);font-size:11px">${d.w}V ${d.l}D</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ══ NAVIGATION ══ */
+function nav(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('on');b.setAttribute('aria-selected','false');});
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+  btn.setAttribute('aria-selected','true');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ══ ACCORDION ══ */
+function toggleReg(header){
+  const body=header.nextElementSibling;
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+/* ══ TOAST ══ */
+function showToast(msg){
+  let t=document.getElementById('toast');
+  if(!t){
+    t=document.createElement('div');
+    t.id='toast';
+    t.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);z-index:9999;background:var(--lime);color:var(--bg);font-family:var(--font-body);font-weight:600;font-size:13px;padding:12px 24px;border-radius:100px;transition:transform .3s;pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  t.textContent=msg;
+  t.style.transform='translateX(-50%) translateY(0)';
+  setTimeout(()=>{t.style.transform='translateX(-50%) translateY(-100px)';},2200);
+}
+
+/* ══ FINANCE ══ */
+function calcFin(){
+  const v=parseFloat(document.getElementById('simV').value)||60;
+  const p=parseFloat(document.getElementById('simP').value)||50;
+  const total=v*8,prize=total*(p/100),churrasco=total-prize;
+  document.getElementById('fInsc').textContent=`R$ ${v.toFixed(2).replace('.',',')}`;
+  document.getElementById('fTotal').textContent=`R$ ${total.toFixed(2).replace('.',',')}`;
+  document.getElementById('fChurrasco').textContent=`R$ ${churrasco.toFixed(2).replace('.',',')}`;
+  document.getElementById('fPrize').textContent=`R$ ${prize.toFixed(0)}`;
+  document.getElementById('fPrize2').textContent=`R$ ${prize.toFixed(0)}`;
+  document.getElementById('finRes').innerHTML=
+    `<span style="color:var(--green)">&#10003;</span> <strong style="color:var(--white)">R$ ${v.toFixed(0)}/atleta</strong> &rarr; Total: <strong style="color:var(--white)">R$ ${total.toFixed(0)}</strong> &middot; Churrasco R$ ${churrasco.toFixed(0)} &middot; <strong style="color:var(--lime)">Premio R$ ${prize.toFixed(0)}</strong>`;
+}
+
+/* ══ ATHLETE PROFILES ══ */
+const ATHLETE_DATA = [
+  {
+    id:'tiago', letter:'A', name:'Tiago', sub:'Atleta #1', img:'img/tiago.png',
+    s2026:{win:'36.36%',jogos:22,vitorias:8,derrotas:14,setsV:8,saldoSets:-9,gamesV:98,saldoGames:-29},
+    geral:{win:'41.87%',jogos:332,vitorias:139,derrotas:193,setsV:176,saldoSets:-66,gamesV:1700,saldoGames:-252}
+  },
+  {
+    id:'demetrius', letter:'B', name:'Demetrius', sub:'Atleta #2 · Admin', img:'img/demetrius.png',
+    s2026:{win:'36.84%',jogos:19,vitorias:7,derrotas:12,setsV:7,saldoSets:-8,gamesV:69,saldoGames:-19},
+    geral:{win:'58.58%',jogos:309,vitorias:181,derrotas:128,setsV:255,saldoSets:73,gamesV:1887,saldoGames:265}
+  },
+  {
+    id:'polenta', letter:'C', name:'Polenta', sub:'Atleta #3', img:'img/polenta.png',
+    s2026:{win:'42.86%',jogos:21,vitorias:9,derrotas:12,setsV:11,saldoSets:-2,gamesV:92,saldoGames:-7},
+    geral:{win:'63.03%',jogos:165,vitorias:104,derrotas:61,setsV:212,saldoSets:93,gamesV:1596,saldoGames:369}
+  },
+  {
+    id:'bruno', letter:'D', name:'Bruno', sub:'Atleta #4', img:'img/bruno.png',
+    s2026:{win:'71.43%',jogos:28,vitorias:20,derrotas:8,setsV:24,saldoSets:10,gamesV:173,saldoGames:35},
+    geral:{win:'73.37%',jogos:383,vitorias:281,derrotas:102,setsV:392,saldoSets:201,gamesV:2704,saldoGames:774}
+  },
+  {
+    id:'fabio', letter:'E', name:'Fabio', sub:'Atleta #5', img:'img/fabio.png',
+    s2026:{win:'35.71%',jogos:14,vitorias:5,derrotas:9,setsV:5,saldoSets:-6,gamesV:61,saldoGames:-21},
+    geral:{win:'59.44%',jogos:249,vitorias:148,derrotas:101,setsV:224,saldoSets:52,gamesV:1755,saldoGames:204}
+  },
+  {
+    id:'igo', letter:'F', name:'Igo', sub:'Atleta #6', img:'img/igo.png',
+    s2026:{win:'70.00%',jogos:40,vitorias:28,derrotas:12,setsV:38,saldoSets:19,gamesV:270,saldoGames:70},
+    geral:{win:'54.63%',jogos:443,vitorias:242,derrotas:201,setsV:351,saldoSets:8,gamesV:3097,saldoGames:36}
+  },
+  {
+    id:'matheus-p', letter:'G', name:'Matheus P', sub:'Atleta #7', img:'img/matheus-p.png',
+    s2026:{win:'40.00%',jogos:5,vitorias:2,derrotas:3,setsV:2,saldoSets:-3,gamesV:23,saldoGames:2},
+    geral:{win:'67.00%',jogos:203,vitorias:136,derrotas:67,setsV:203,saldoSets:94,gamesV:1476,saldoGames:381}
+  },
+  {
+    id:'matheus-s', letter:'H', name:'Matheus S', sub:'Atleta #8', img:'img/matheus-s.png',
+    s2026:{win:'61.90%',jogos:21,vitorias:13,derrotas:8,setsV:16,saldoSets:3,gamesV:128,saldoGames:16},
+    geral:{win:'63.24%',jogos:370,vitorias:234,derrotas:136,setsV:329,saldoSets:99,gamesV:2467,saldoGames:376}
+  }
+];
+
+function buildAthleteCards(){
+  const grid=document.getElementById('athletesGrid');
+  grid.innerHTML=ATHLETE_DATA.map((a,i)=>{
+    const winPct=parseFloat(a.geral.win);
+    return `<div class="athlete-card" onclick="openAthleteModal(${i})">
+      <div class="athlete-card-img">
+        <span class="athlete-card-letter">${a.letter}</span>
+        <img src="${a.img}" alt="${a.name}" loading="lazy">
+      </div>
+      <div class="athlete-card-body">
+        <div class="athlete-card-name">${a.name}</div>
+        <div class="athlete-card-tag">${a.sub}</div>
+        <div class="athlete-card-stats">
+          <div class="athlete-card-stat"><div class="athlete-card-stat-val">${a.geral.jogos}</div><div class="athlete-card-stat-label">Jogos</div></div>
+          <div class="athlete-card-stat"><div class="athlete-card-stat-val">${a.geral.vitorias}</div><div class="athlete-card-stat-label">Vitorias</div></div>
+        </div>
+        <div class="athlete-card-winrate">
+          <div style="flex:1">
+            <div class="athlete-card-winrate-label">Win Rate Geral</div>
+            <div class="athlete-card-winrate-bar"><div class="athlete-card-winrate-fill" style="width:${winPct}%"></div></div>
+          </div>
+          <div class="athlete-card-winrate-val">${a.geral.win}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openAthleteModal(idx){
+  const a=ATHLETE_DATA[idx];
+  const overlay=document.getElementById('athleteModal');
+  document.getElementById('amImg').src=a.img;
+  document.getElementById('amImg').alt=a.name;
+  document.getElementById('amLetter').textContent=a.letter;
+  document.getElementById('amName').textContent=a.name;
+  document.getElementById('amSub').textContent=a.sub;
+
+  // Winrate circle
+  const pct=parseFloat(a.geral.win);
+  const circ=150.8;
+  const offset=circ-(circ*pct/100);
+  document.getElementById('amWinPct').textContent=a.geral.win;
+  const fg=document.getElementById('amCircleFg');
+  fg.style.strokeDashoffset=circ;
+  document.getElementById('amWinDesc').textContent=`${a.geral.vitorias}V / ${a.geral.derrotas}D em ${a.geral.jogos} jogos`;
+
+  // Stats 2026
+  const s=a.s2026;
+  document.getElementById('amStats2026').innerHTML=renderStatGrid(s);
+
+  // Stats Geral
+  const g=a.geral;
+  document.getElementById('amStatsGeral').innerHTML=renderStatGrid(g);
+
+  overlay.classList.add('show');
+  document.body.style.overflow='hidden';
+
+  // Animate circle after modal opens
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      fg.style.strokeDashoffset=offset;
+    });
+  });
+}
+
+function renderStatGrid(s){
+  const saldoClass=(v)=>v>0?'positive':v<0?'negative':'neutral';
+  const saldoSign=(v)=>v>0?'+'+v:v;
+  return `
+    <div class="am-stat"><div class="am-stat-val neutral">${s.jogos}</div><div class="am-stat-label">Jogos</div></div>
+    <div class="am-stat"><div class="am-stat-val positive">${s.vitorias}</div><div class="am-stat-label">Vitorias</div></div>
+    <div class="am-stat"><div class="am-stat-val negative">${s.derrotas}</div><div class="am-stat-label">Derrotas</div></div>
+    <div class="am-stat"><div class="am-stat-val neutral">${s.setsV}</div><div class="am-stat-label">Sets V</div></div>
+    <div class="am-stat"><div class="am-stat-val ${saldoClass(s.saldoSets)}">${saldoSign(s.saldoSets)}</div><div class="am-stat-label">Saldo Sets</div></div>
+    <div class="am-stat"><div class="am-stat-val neutral">${s.gamesV}</div><div class="am-stat-label">Games V</div></div>
+    <div class="am-stat"><div class="am-stat-val ${saldoClass(s.saldoGames)}">${saldoSign(s.saldoGames)}</div><div class="am-stat-label">Saldo Games</div></div>
+    <div class="am-stat"><div class="am-stat-val neutral">${s.win}</div><div class="am-stat-label">Win Rate</div></div>
+  `;
+}
+
+function closeAthleteModal(){
+  document.getElementById('athleteModal').classList.remove('show');
+  document.body.style.overflow='';
+}
+
+/* ══ INIT ══ */
+checkAdminSession();load();buildForm();updateRank();buildAthleteCards();
+// Delay updateAdminUI to ensure DOM is ready
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',()=>updateAdminUI());
+}else{
+  updateAdminUI();
+}
+</script>
+</body>
+</html>
