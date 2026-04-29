@@ -1924,9 +1924,9 @@ footer {
     <div class="format-card">
       <div class="format-label">Pontuacao</div>
       <div class="format-body">
-        Cada atleta acumula <strong>saldo individual</strong> de games independente do parceiro.<br>
-        <strong>Saldo = GV - GP</strong> em todas as partidas.<br>
-        Maior saldo = <strong>Campeao</strong>
+        Cada atleta acumula <strong>games vencidos</strong> independente do parceiro.<br>
+        <strong>Soma = total de games vencidos (GV)</strong> em todas as partidas.<br>
+        Maior soma = <strong>Campeao</strong>
       </div>
     </div>
   </div>
@@ -1944,7 +1944,7 @@ footer {
   <div class="sh"><span class="sh-tag">02</span><h2>Cronograma &middot; 02/05</h2><div class="sh-line"></div></div>
 
   <div class="info-box" style="margin-bottom:14px;">
-    <strong>15 min por partida</strong> &middot; 5 min de intervalo entre rodadas &middot; Inicio 07:00 &middot; Encerramento 11:00 &middot; Set de <strong>3 games</strong>
+    <strong>15 min por partida</strong> &middot; 5 min de intervalo entre rodadas &middot; Inicio 07:00 &middot; Encerramento 11:00 &middot; Set de <strong>4 games</strong>
   </div>
 
   <div class="schedule-wrap">
@@ -2059,7 +2059,7 @@ footer {
 <div id="p-ranking" class="panel">
 
   <div class="sh"><span class="sh-tag">04</span><h2>Ranking Individual</h2><div class="sh-line"></div></div>
-  <p style="font-size:12px;color:var(--gray500);margin-bottom:14px;">Classificacao por <strong style="color:var(--lime)">saldo de games (GV - GP)</strong>. Desempate por criterios CBT/ITF.</p>
+  <p style="font-size:12px;color:var(--gray500);margin-bottom:14px;">Classificacao por <strong style="color:var(--lime)">soma de games vencidos (GV)</strong>. Desempate por criterios CBT/ITF.</p>
 
   <div class="rank-scroll">
     <table class="rank-table">
@@ -2177,7 +2177,7 @@ footer {
       <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="reg-body open">
-      <p>O torneio <strong>Super 8</strong> e uma competicao amadora de Beach Tennis no formato de <strong>duplas rotativas</strong>, disputado em pontos corridos com classificacao por saldo individual de games.</p>
+      <p>O torneio <strong>Super 8</strong> e uma competicao amadora de Beach Tennis no formato de <strong>duplas rotativas</strong>, disputado em pontos corridos com classificacao por soma individual de games vencidos.</p>
       <p>Participam <strong>8 atletas</strong>, todos previamente confirmados via grupo do WhatsApp "Super 8". A participacao implica total conhecimento e aceitacao deste regulamento.</p>
     </div>
   </div>
@@ -2207,7 +2207,7 @@ footer {
       <p><strong>3.1 Duplas rotativas:</strong> as duplas sao pre-sorteadas por algoritmo matematico de forma que cada atleta jogue com todos os outros ao menos uma vez como parceiro ao longo do torneio.</p>
       <p><strong>3.2 Total de rodadas:</strong> 7 rodadas, 2 partidas por rodada, 14 partidas no total. Cada atleta disputa 7 partidas.</p>
       <p><strong>3.3 Tempo por partida:</strong> 15 minutos. Intervalos de 5 minutos entre rodadas.</p>
-      <p><strong>3.4 Pontuacao individual:</strong> o saldo de games de cada partida e computado individualmente para cada atleta, independente de qual foi seu parceiro na rodada.</p>
+      <p><strong>3.4 Pontuacao individual:</strong> os games vencidos de cada partida sao somados individualmente para cada atleta, independente de qual foi seu parceiro na rodada.</p>
     </div>
   </div>
 
@@ -2217,8 +2217,8 @@ footer {
       <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="reg-body">
-      <p><strong>4.1 Set:</strong> 1 set de 3 games (adaptacao para formato amador de tempo reduzido). Primeiro a 3 games vence.</p>
-      <p><strong>4.2 Empate 2-2 em games:</strong> disputa-se Super Tiebreak de 10 pontos. Vencedor recebe 3 games na tabela, perdedor 2.</p>
+      <p><strong>4.1 Set:</strong> 1 set de 4 games (adaptacao para formato amador de tempo reduzido). Primeiro a 4 games vence.</p>
+      <p><strong>4.2 Empate 3-3 em games:</strong> disputa-se Super Tiebreak de 10 pontos. Vencedor recebe 4 games na tabela, perdedor 3.</p>
       <p><strong>4.3 Pontuacao no game (ITF No-Ad):</strong> 0, 15, 30, 40. Em deuce (40-40): disputa-se ponto decisivo unico (sem vantagem). Quem vencer o ad-point vence o game.</p>
       <p><strong>4.4 Saque:</strong> apenas 1 saque por ponto (sem segundo saque). Foot fault = falta. Let = ponto repetido.</p>
       <p><strong>4.5 Troca de lado:</strong> apos o 2o game de cada set, conforme Regra 11 ITF.</p>
@@ -2236,9 +2236,9 @@ footer {
       <ul>
         <li><strong>Ate 5 min de atraso:</strong> advertencia verbal. O jogo inicia sem o atleta atrasado -- o parceiro joga sozinho ate o atleta entrar.</li>
         <li><strong>5 a 10 min de atraso:</strong> perda de 1 game na contagem individual.</li>
-        <li><strong>Mais de 10 min / nao comparecimento:</strong> WO -- a partida e dada como derrota por 0x3, computando -3 no saldo individual do atleta ausente.</li>
+        <li><strong>Mais de 10 min / nao comparecimento:</strong> WO -- a partida e dada como derrota por 0x4, computando 0 games na soma individual do atleta ausente.</li>
       </ul>
-      <p><strong>5.2 WO por desistencia:</strong> caso um atleta se retire do torneio apos o inicio, todos os seus jogos restantes sao computados como derrota por 0x3.</p>
+      <p><strong>5.2 WO por desistencia:</strong> caso um atleta se retire do torneio apos o inicio, todos os seus jogos restantes sao computados como derrota por 0x4.</p>
     </div>
   </div>
 
@@ -2265,7 +2265,7 @@ footer {
       <svg class="art-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="reg-body">
-      <p><strong>7.1</strong> Classificacao por <strong>saldo individual de games</strong> (GV - GP) acumulado em todas as 7 partidas.</p>
+      <p><strong>7.1</strong> Classificacao por <strong>soma individual de games vencidos</strong> (GV) acumulada em todas as 7 partidas.</p>
       <p><strong>7.2 Criterios de desempate</strong> (em ordem): (1) Confronto direto, (2) Game Average, (3) Saldo absoluto, (4) Maior no. de vitorias, (5) Super Tiebreak de 10 pontos.</p>
       <p><strong>7.3 Premiacao:</strong> 50% do total arrecadado (R$ 240,00) para o 1o colocado. Em caso de empate apos todos os criterios, o premio e dividido igualmente entre os atletas empatados.</p>
       <p><strong>7.4</strong> A premiacao e realizada ao fim do torneio, as 11:00, antes do churrasco.</p>
@@ -2599,9 +2599,9 @@ function updateRank(){
     w:st[p].wins,l:st[p].losses
   }));
   data.sort((a,b)=>{
-    if(b.saldo!==a.saldo)return b.saldo-a.saldo;
-    if(b.avgN!==a.avgN)return b.avgN-a.avgN;
     if(b.gv!==a.gv)return b.gv-a.gv;
+    if(b.avgN!==a.avgN)return b.avgN-a.avgN;
+    if(b.saldo!==a.saldo)return b.saldo-a.saldo;
     return b.w-a.w;
   });
   const icons=['&#129351;','&#129352;','&#129353;','4','5','6','7','8'];
