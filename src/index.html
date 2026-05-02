@@ -2386,24 +2386,34 @@ footer {
 /* ══ DATA ══ */
 const PLAYERS=['Tiago','Demetrius','Polenta','Bruno','Fabio','Igo','Matheus P','Matheus S'];
 const MATCHES=[
-  {r:1,j:1,da:['Tiago','Demetrius'],db:['Polenta','Matheus S']},
-  {r:1,j:2,da:['Bruno','Matheus P'],db:['Fabio','Igo']},
-  {r:2,j:3,da:['Tiago','Matheus S'],db:['Demetrius','Matheus P']},
-  {r:2,j:4,da:['Polenta','Igo'],db:['Bruno','Fabio']},
-  {r:3,j:5,da:['Tiago','Matheus P'],db:['Matheus S','Igo']},
-  {r:3,j:6,da:['Demetrius','Fabio'],db:['Polenta','Bruno']},
-  {r:4,j:7,da:['Tiago','Igo'],db:['Matheus P','Fabio']},
-  {r:4,j:8,da:['Matheus S','Bruno'],db:['Demetrius','Polenta']},
-  {r:5,j:9,da:['Tiago','Fabio'],db:['Igo','Bruno']},
-  {r:5,j:10,da:['Matheus P','Polenta'],db:['Matheus S','Demetrius']},
-  {r:6,j:11,da:['Tiago','Bruno'],db:['Fabio','Polenta']},
-  {r:6,j:12,da:['Igo','Demetrius'],db:['Matheus P','Matheus S']},
-  {r:7,j:13,da:['Tiago','Polenta'],db:['Bruno','Demetrius']},
-  {r:7,j:14,da:['Fabio','Matheus S'],db:['Igo','Matheus P']}
+  {r:1,j:1,da:['Tiago','Polenta'],db:['Demetrius','Igo']},
+  {r:1,j:2,da:['Matheus S','Bruno'],db:['Matheus P','Fabio']},
+  {r:2,j:3,da:['Tiago','Matheus P'],db:['Demetrius','Bruno']},
+  {r:2,j:4,da:['Polenta','Fabio'],db:['Matheus S','Igo']},
+  {r:3,j:5,da:['Tiago','Bruno'],db:['Fabio','Igo']},
+  {r:3,j:6,da:['Demetrius','Matheus P'],db:['Polenta','Matheus S']},
+  {r:4,j:7,da:['Tiago','Demetrius'],db:['Matheus S','Fabio']},
+  {r:4,j:8,da:['Polenta','Igo'],db:['Bruno','Matheus P']},
+  {r:5,j:9,da:['Tiago','Fabio'],db:['Polenta','Matheus P']},
+  {r:5,j:10,da:['Demetrius','Matheus S'],db:['Bruno','Igo']},
+  {r:6,j:11,da:['Tiago','Matheus S'],db:['Polenta','Bruno']},
+  {r:6,j:12,da:['Demetrius','Fabio'],db:['Matheus P','Igo']},
+  {r:7,j:13,da:['Tiago','Igo'],db:['Matheus S','Matheus P']},
+  {r:7,j:14,da:['Demetrius','Polenta'],db:['Bruno','Fabio']}
 ];
 
+// Resultados oficiais ja confirmados — codificados como source of truth.
+// Sao mesclados com o LocalStorage no load(): edicoes do admin sobrescrevem o default.
+const INITIAL_SCORES={
+  1:{a:'1',b:'4'},   // Tiago + Polenta  1 x 4  Demetrius + Igo
+  2:{a:'3',b:'5'},   // Matheus S + Bruno  3 x 5  Matheus P + Fabio
+  3:{a:'2',b:'4'},   // Tiago + Matheus P  2 x 4  Demetrius + Bruno
+};
+
 let scores={};
-MATCHES.forEach(m=>{scores[m.j]={a:'',b:''};});
+MATCHES.forEach(m=>{
+  scores[m.j]=INITIAL_SCORES[m.j]?{...INITIAL_SCORES[m.j]}:{a:'',b:''};
+});
 
 /* ══ ADMIN AUTH ══ */
 const ADMIN_PIN='0205'; // PIN = data do torneio
@@ -2566,7 +2576,23 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 function save(){try{localStorage.setItem('s8v4',JSON.stringify(scores));localStorage.setItem('s8v4_savedAt',String(Date.now()));}catch(e){}}
-function load(){try{const s=localStorage.getItem('s8v4');if(s)scores=JSON.parse(s);}catch(e){}}
+function load(){
+  try{
+    const s=localStorage.getItem('s8v4');
+    if(!s) return; // sem cache, mantem INITIAL_SCORES
+    const stored=JSON.parse(s);
+    // Merge: LocalStorage tem prioridade APENAS se o jogo tiver placar nao-vazio.
+    // Assim, novos placares oficiais (INITIAL_SCORES) aparecem mesmo pra quem ja
+    // visitou o site antes do placar ser publicado.
+    MATCHES.forEach(m=>{
+      const k=m.j;
+      const sa=stored[k]?.a, sb=stored[k]?.b;
+      if((sa!==''&&sa!=null)||(sb!==''&&sb!=null)){
+        scores[k]={a:sa??'',b:sb??''};
+      }
+    });
+  }catch(e){}
+}
 
 function manualSave(){
   if(!isAdmin) return;
