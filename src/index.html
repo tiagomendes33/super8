@@ -1045,6 +1045,33 @@ body {
   text-align: center;
 }
 
+/* Placar inline na aba Jogos */
+.m-vs.m-vs-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: auto;
+  min-width: 60px;
+  padding: 0 8px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--gray500);
+}
+.m-vs.m-vs-score .sep {
+  color: var(--gray700);
+  font-size: 12px;
+  font-weight: 400;
+}
+.m-vs.m-vs-score .wn {
+  color: var(--lime);
+  text-shadow: 0 0 8px rgba(201,255,55,0.4);
+}
+.match-row.match-played {
+  background: rgba(201,255,55,0.025);
+}
+
 .match-id {
   font-family: var(--font-mono);
   font-size: 9px;
@@ -1852,6 +1879,62 @@ body {
   min-height: 18px;
 }
 
+/* Login (user + senha) */
+.login-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto 16px;
+}
+
+.login-field {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s, background .2s;
+  -webkit-appearance: none;
+}
+
+.login-field:focus {
+  border-color: var(--lime);
+  background: rgba(201,255,55,0.04);
+}
+
+.login-field::placeholder {
+  color: var(--gray500);
+}
+
+.login-submit {
+  background: var(--lime);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 20px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: transform .15s, background .15s;
+}
+
+.login-submit:active { transform: scale(0.97); background: var(--lime-dim); }
+
+/* Esconde aba Placar quando NAO admin */
+body:not(.is-admin) [data-admin-only] {
+  display: none !important;
+}
+
 /* Readonly scores */
 .s-in.readonly {
   border-color: rgba(201,255,55,0.40);
@@ -1951,7 +2034,7 @@ footer {
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     <span>Jogos</span>
   </button>
-  <button class="nav-btn" onclick="nav('placar',this)" role="tab" aria-selected="false" aria-label="Placar">
+  <button class="nav-btn" onclick="nav('placar',this)" role="tab" aria-selected="false" aria-label="Placar" data-admin-only>
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
     <span>Placar</span>
   </button>
@@ -2148,20 +2231,19 @@ footer {
   </button>
 </div>
 
-<!-- PIN Modal -->
-<div class="pin-overlay" id="pinOverlay">
+<!-- Login Modal (substitui o PIN) -->
+<div class="pin-overlay" id="loginOverlay">
   <div class="pin-modal">
     <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
     <h3>ACESSO ADMIN</h3>
-    <p>Digite o PIN de 4 digitos</p>
-    <div class="pin-error-msg" id="pinError"></div>
-    <div class="pin-inputs">
-      <input class="pin-digit" type="tel" maxlength="1" inputmode="numeric" id="pin0" autocomplete="off">
-      <input class="pin-digit" type="tel" maxlength="1" inputmode="numeric" id="pin1" autocomplete="off">
-      <input class="pin-digit" type="tel" maxlength="1" inputmode="numeric" id="pin2" autocomplete="off">
-      <input class="pin-digit" type="tel" maxlength="1" inputmode="numeric" id="pin3" autocomplete="off">
+    <p>Entre com usuario e senha</p>
+    <div class="pin-error-msg" id="loginError"></div>
+    <div class="login-inputs">
+      <input class="login-field" type="text" id="loginUser" placeholder="Usuario" autocomplete="username" autocapitalize="off" autocorrect="off">
+      <input class="login-field" type="password" id="loginPass" placeholder="Senha" autocomplete="current-password">
+      <button class="login-submit" onclick="checkLogin()">Entrar</button>
     </div>
-    <button class="pin-cancel" onclick="closePinModal()">Cancelar</button>
+    <button class="pin-cancel" onclick="closeLoginModal()">Cancelar</button>
   </div>
 </div>
 
@@ -2502,7 +2584,7 @@ MATCHES.forEach(m=>{
 });
 
 /* ══ ADMIN AUTH ══ */
-const ADMIN_PIN='0205'; // PIN = data do torneio
+// ADMIN_PIN removido — autenticacao agora via /admin com user+senha (vide ADMIN_USER/ADMIN_PASS abaixo)
 let isAdmin=false;
 
 function checkAdminSession(){
@@ -2576,89 +2658,96 @@ function updateAdminUI(){
   });
 }
 
+/* ══ ADMIN LOGIN (user + senha) ══ */
+// Credenciais — para mudar, edite estas duas constantes:
+const ADMIN_USER='admin';
+const ADMIN_PASS='super8tau';
+
 function handleAdminToggle(){
   if(isAdmin){
     setAdminSession(false);
+    applyAdminTabVisibility();
     updateAdminUI();
     showToast('Modo admin desativado');
   }else{
-    openPinModal();
+    openLoginModal();
   }
 }
 
-/* ══ PIN MODAL ══ */
-function openPinModal(){
-  const overlay=document.getElementById('pinOverlay');
-  document.getElementById('pinError').textContent='';
+function openLoginModal(){
+  const overlay=document.getElementById('loginOverlay');
+  document.getElementById('loginError').textContent='';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
   overlay.classList.add('show');
-  // Clear and focus first digit
-  for(let i=0;i<4;i++){
-    const d=document.getElementById('pin'+i);
-    d.value='';
-    d.classList.remove('error');
+  setTimeout(()=>document.getElementById('loginUser').focus(),200);
+}
+
+function closeLoginModal(){
+  document.getElementById('loginOverlay').classList.remove('show');
+  // Se estiver em /admin sem login, volta pra raiz
+  if(location.pathname==='/admin' || location.pathname==='/admin/'){
+    history.replaceState(null,'','/');
   }
-  setTimeout(()=>document.getElementById('pin0').focus(),200);
 }
 
-function closePinModal(){
-  document.getElementById('pinOverlay').classList.remove('show');
-}
-
-function checkPin(){
-  let pin='';
-  for(let i=0;i<4;i++) pin+=document.getElementById('pin'+i).value;
-  if(pin.length<4) return;
-
-  if(pin===ADMIN_PIN){
-    closePinModal();
+function checkLogin(){
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
+  if(!u||!p){
+    document.getElementById('loginError').textContent='Preencha usuario e senha';
+    return;
+  }
+  if(u===ADMIN_USER && p===ADMIN_PASS){
+    document.getElementById('loginOverlay').classList.remove('show');
     setAdminSession(true);
+    applyAdminTabVisibility();
     updateAdminUI();
+    renderJogosScores();
     showToast('Modo admin ativado!');
-  }else{
-    document.getElementById('pinError').textContent='PIN incorreto. Tente novamente.';
-    for(let i=0;i<4;i++){
-      const d=document.getElementById('pin'+i);
-      d.classList.add('error');
-      d.value='';
+    if(location.pathname==='/admin' || location.pathname==='/admin/'){
+      history.replaceState(null,'','/');
     }
-    setTimeout(()=>{
-      for(let i=0;i<4;i++) document.getElementById('pin'+i).classList.remove('error');
-      document.getElementById('pin0').focus();
-    },500);
+  }else{
+    document.getElementById('loginError').textContent='Usuario ou senha incorretos';
   }
 }
 
-// PIN input behavior: auto-advance, backspace, paste
+/* Mostra/esconde botao da aba Placar e troca pra outra aba se nao admin */
+function applyAdminTabVisibility(){
+  if(isAdmin){
+    document.body.classList.add('is-admin');
+  }else{
+    document.body.classList.remove('is-admin');
+    // Se nao admin estava na aba placar, volta pra atletas
+    const placarPanel=document.getElementById('p-placar');
+    if(placarPanel && placarPanel.classList.contains('on')){
+      const atletasBtn=document.querySelector('.nav-btn[aria-label="Atletas"]');
+      if(atletasBtn) nav('atletas',atletasBtn);
+    }
+  }
+}
+
+/* Login modal — listeners */
 document.addEventListener('DOMContentLoaded',()=>{
-  for(let i=0;i<4;i++){
-    const d=document.getElementById('pin'+i);
-    d.addEventListener('input',e=>{
-      const v=e.target.value.replace(/\D/g,'');
-      e.target.value=v.slice(-1);
-      if(v && i<3) document.getElementById('pin'+(i+1)).focus();
-      if(i===3 && v) checkPin();
-    });
-    d.addEventListener('keydown',e=>{
-      if(e.key==='Backspace' && !e.target.value && i>0){
-        document.getElementById('pin'+(i-1)).focus();
-      }
-      if(e.key==='Escape') closePinModal();
-    });
-    d.addEventListener('paste',e=>{
-      e.preventDefault();
-      const paste=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,4);
-      for(let k=0;k<paste.length&&k<4;k++){
-        document.getElementById('pin'+k).value=paste[k];
-      }
-      if(paste.length>=4) checkPin();
-      else if(paste.length>0) document.getElementById('pin'+Math.min(paste.length,3)).focus();
+  const overlay=document.getElementById('loginOverlay');
+  if(overlay){
+    overlay.addEventListener('click',e=>{
+      if(e.target===e.currentTarget) closeLoginModal();
     });
   }
-
-  // Close modal on overlay click
-  document.getElementById('pinOverlay').addEventListener('click',e=>{
-    if(e.target===e.currentTarget) closePinModal();
+  ['loginUser','loginPass'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('keydown',e=>{
+      if(e.key==='Enter') checkLogin();
+      if(e.key==='Escape') closeLoginModal();
+    });
   });
+  // Detecta /admin na URL
+  if(location.pathname==='/admin' || location.pathname==='/admin/'){
+    if(!isAdmin) setTimeout(openLoginModal,150);
+  }
 });
 
 function save(){try{localStorage.setItem('s8v4',JSON.stringify(scores));localStorage.setItem('s8v4_savedAt',String(Date.now()));}catch(e){}}
@@ -2703,6 +2792,31 @@ function updateSaveMeta(){
   const hh=String(d.getHours()).padStart(2,'0');
   const mm=String(d.getMinutes()).padStart(2,'0');
   meta.textContent=`· salvo ${hh}:${mm}`;
+}
+
+/* ══ Render placares na aba Jogos ══ */
+// Substitui o "VS" de cada match-row pelo placar quando ja jogado
+function renderJogosScores(){
+  document.querySelectorAll('#p-cronograma .match-row').forEach(row=>{
+    const idEl=row.querySelector('.match-id');
+    if(!idEl) return;
+    const j=parseInt(idEl.textContent.replace(/\D/g,''),10);
+    if(!j) return;
+    const sc=scores[j];
+    const vsEl=row.querySelector('.m-vs');
+    if(!vsEl) return;
+    if(sc && sc.a!=='' && sc.b!=='' && sc.a!=null && sc.b!=null){
+      const a=parseInt(sc.a), b=parseInt(sc.b);
+      const wA=a>b, wB=b>a;
+      vsEl.classList.add('m-vs-score');
+      vsEl.innerHTML=`<span class="${wA?'wn':''}">${a}</span><span class="sep">×</span><span class="${wB?'wn':''}">${b}</span>`;
+      row.classList.add('match-played');
+    }else{
+      vsEl.classList.remove('m-vs-score');
+      vsEl.textContent='VS';
+      row.classList.remove('match-played');
+    }
+  });
 }
 
 /* ══ SCORE FORM ══ */
@@ -2757,14 +2871,14 @@ function onS(j){
       else if(nb>na)card.classList.add('won-b');
     }
   }
-  save();updateRank();
+  save();updateRank();renderJogosScores();
 }
 
 function resetScores(){
   if(!isAdmin) return;
   if(!confirm('Limpar todos os resultados?'))return;
   MATCHES.forEach(m=>{scores[m.j]={a:'',b:''};});
-  save();buildForm();updateRank();
+  save();buildForm();updateRank();renderJogosScores();
 }
 
 /* ══ RANKING ══ */
@@ -3024,7 +3138,7 @@ function closeAthleteModal(){
 }
 
 /* ══ INIT ══ */
-checkAdminSession();load();buildForm();buildAthleteCards();updateRank();
+checkAdminSession();load();buildForm();buildAthleteCards();updateRank();renderJogosScores();applyAdminTabVisibility();
 // Delay updateAdminUI to ensure DOM is ready
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded',()=>updateAdminUI());
