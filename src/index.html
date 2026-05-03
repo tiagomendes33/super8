@@ -2468,27 +2468,31 @@ const MATCHES=[
   {r:7,j:14,da:['Demetrius','Polenta'],db:['Bruno','Fabio']}
 ];
 
-// Resultados oficiais ja confirmados — codificados como source of truth.
-// Sao mesclados com o LocalStorage no load(): edicoes do admin sobrescrevem o default.
+// Resultados oficiais dos 14 jogos disputados — source of truth.
+// Mesclados com LocalStorage no load(): edicoes do admin sobrescrevem.
+// Conferidos contra os totais GV/GP do ranking final (Bruno 29/19, Igo 27/22 ...)
 const INITIAL_SCORES={
-  1:{a:'1',b:'4'},   // Tiago + Polenta  1 x 4  Demetrius + Igo
-  2:{a:'3',b:'5'},   // Matheus S + Bruno  3 x 5  Matheus P + Fabio
-  3:{a:'2',b:'4'},   // Tiago + Matheus P  2 x 4  Demetrius + Bruno
+  1: {a:'1', b:'4'},   // Tiago + Polenta      1 x 4  Demetrius + Igo
+  2: {a:'3', b:'5'},   // Matheus S + Bruno    3 x 5  Matheus P + Fabio
+  3: {a:'2', b:'4'},   // Tiago + Matheus P    2 x 4  Demetrius + Bruno
+  4: {a:'4', b:'5'},   // Polenta + Fabio      4 x 5  Matheus S + Igo
+  5: {a:'5', b:'4'},   // Tiago + Bruno        5 x 4  Fabio + Igo
+  6: {a:'2', b:'4'},   // Demetrius + Matheus P 2 x 4 Polenta + Matheus S
+  7: {a:'4', b:'2'},   // Tiago + Demetrius    4 x 2  Matheus S + Fabio
+  8: {a:'2', b:'4'},   // Polenta + Igo        2 x 4  Bruno + Matheus P
+  9: {a:'0', b:'4'},   // Tiago + Fabio        0 x 4  Polenta + Matheus P
+  10:{a:'2', b:'4'},   // Demetrius + Matheus S 2 x 4 Bruno + Igo
+  11:{a:'1', b:'4'},   // Tiago + Matheus S    1 x 4  Polenta + Bruno
+  12:{a:'1', b:'4'},   // Demetrius + Fabio    1 x 4  Matheus P + Igo
+  13:{a:'4', b:'5'},   // Tiago + Igo          4 x 5  Matheus S + Matheus P
+  14:{a:'3', b:'5'},   // Demetrius + Polenta  3 x 5  Bruno + Fabio
 };
 
-// Resultado FINAL do torneio (apos os 14 jogos disputados).
-// Quando definido, sobrepoe o calculo dinamico em updateRank().
-// Para voltar ao ranking ao vivo (recalculado de scores), defina FINAL_RESULTS=null.
-const FINAL_RESULTS=[
-  {n:'Bruno',     gv:29, gp:19, avgS:'0.622'},
-  {n:'Igo',       gv:27, gp:22, avgS:'0.578'},
-  {n:'Matheus P', gv:26, gp:18, avgS:'0.616'},
-  {n:'Polenta',   gv:22, gp:21, avgS:'0.546'},
-  {n:'Matheus S', gv:22, gp:27, avgS:'0.431'},
-  {n:'Fabio',     gv:21, gp:28, avgS:'0.382'},
-  {n:'Demetrius', gv:20, gp:22, avgS:'0.482'},
-  {n:'Tiago',     gv:17, gp:27, avgS:'0.343'},
-];
+// FINAL_RESULTS=null faz o ranking ser calculado dinamicamente dos
+// placares (INITIAL_SCORES + qualquer edicao via admin). Para fixar
+// um ranking final hardcoded (ex: torneio com placares perdidos),
+// preencha o array com 8 objetos {n, gv, gp, avgS}.
+const FINAL_RESULTS=null;
 
 let scores={};
 MATCHES.forEach(m=>{
